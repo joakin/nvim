@@ -361,7 +361,8 @@ vim.opt.conceallevel = 2
 
 -- Popup menu
 vim.opt.pumheight = 5
-vim.opt.pumblend = 30
+-- TODO: Figure out why it isn't working
+-- vim.opt.pumblend = 30
 
 -- }}}
 
@@ -455,6 +456,276 @@ vim.g.rsi_no_meta = 1
 -- mustache-handlebars {{{
 -- don't enable the ie/ae text objects as we have the entire file ones
 vim.g.mustache_operators = 0
+-- }}}
+
+-- }}}
+
+-- Mappings {{{
+
+-- Vim {{{
+
+-- Repeat search & replace
+vim.keymap.set("n", "&", ":&&<CR>", { desc = "Repeat search with flags" })
+vim.keymap.set("x", "&", ":&&<CR>", { desc = "Repeat search with flags" })
+
+-- Make . work with a visual selection
+vim.keymap.set("v", ".", ":normal .<cr>", { desc = ". repeat with a visual selection" })
+
+-- Easy one hand Esc
+vim.keymap.set("i", "ii", "<Esc>")
+
+-- Easier omnicompletion
+vim.keymap.set("i", "<c-space>", "<C-X><C-O>")
+
+-- Manipulate windows (shortcuts)
+vim.keymap.set(
+  "n",
+  "<C-W><C-F>",
+  "<C-W>_:vertical resize<cr>",
+  { desc = "Maximize window, make it as big as possible" }
+)
+vim.keymap.set("n", "<C-W><C-E>", "<C-W>=", { desc = "Make all windows equal size" })
+vim.keymap.set("n", "<C-W>+", "<C-W>10+", { desc = "Make window taller" })
+vim.keymap.set("n", "<C-W>-", "<C-W>10-", { desc = "Make window shorter" })
+vim.keymap.set("n", "<C-W><", "<C-W>20<", { desc = "Make window thiner" })
+vim.keymap.set("n", "<C-W>>", "<C-W>20>", { desc = "Make window wider" })
+
+-- Formatting
+vim.keymap.set("n", "Q", "gqip", { desc = "Text format inner paragraph" })
+vim.keymap.set("v", "Q", "gq", { desc = "Text format inner paragraph" })
+
+-- Center screen when moving
+vim.keymap.set("n", "n", "nzzzv")
+vim.keymap.set("n", "N", "Nzzzv")
+-- Same when jumping around
+vim.keymap.set("n", "g;", "g;zzzv")
+vim.keymap.set("n", "g,", "g,zzzv")
+vim.keymap.set("n", "<c-o>", "<c-o>zzzv")
+vim.keymap.set("n", "<c-i>", "<c-i>zzzv")
+
+-- Line-wise movements
+vim.keymap.set("n", "H", "^", { desc = "Go to beginning of line" })
+vim.keymap.set("n", "L", "$", { desc = "Go to end of line" })
+vim.keymap.set("v", "L", "g_", { desc = "Go to end of line" })
+vim.keymap.set("n", "gH", "H", { desc = "Move cursor to top of window" })
+vim.keymap.set("n", "gL", "L", { desc = "Move cursor to bottom of window" })
+
+-- gI
+-- gi already moves to "last place you exited insert mode", so we'll map gI to
+-- something similar: move to last change
+vim.keymap.set("n", "gI", "`.", { desc = "Move to last change" })
+
+-- Folds
+-- Space to toggle folds.
+vim.keymap.set("n", "z<space>", "za", { desc = "Toggle fold" })
+vim.keymap.set("n", "zO", "zczO", { desc = "Open folds to cursor" })
+
+-- "Focus" the current line
+-- 1. Close all folds.
+-- 2. Open just the folds containing the current line.
+-- 3. Move the line to a little bit (15 lines) above the center of the screen.
+-- 4. Pulse the cursor line.
+-- This mapping wipes out the z mark, which I never use.
+vim.keymap.set(
+  "n",
+  "z<cr>",
+  "mzzMzvzczOzz1<c-e>`z:Pulse<cr>",
+  { desc = "Focus current line, opening fold and closing the rest" }
+)
+
+-- Command line maps
+vim.keymap.set(
+  "c",
+  "<expr>%%",
+  [[getcmdtype() == ':' ? expand('%:h').'/' : '%%']],
+  { desc = "Expand into current file's folder" }
+)
+vim.keymap.set("c", "<c-n>", "<down>", { desc = "Previous command" })
+vim.keymap.set("c", "<c-p>", "<up>", { desc = "Next command" })
+
+-- Colon and Semi-colon mappings
+-- Easier : reach, and saner ; map
+-- Now, ; goes avanti with f/F t/T and <shift-;> goes backwards
+-- Also command line goes to , which is better than <shift-;>
+vim.keymap.set("n", ",", ":", { desc = "Enter command mode" })
+vim.keymap.set("x", ",", ":", { desc = "Enter command mode" })
+vim.keymap.set("n", ":", ",", { desc = "Previous char match" })
+vim.keymap.set("x", ":", ",", { desc = "Previous char match" })
+
+-- Easy filetype changing {{{
+vim.keymap.set("n", "yoft", ":set filetype=txt<cr>", { desc = 'Set filetype to "txt"' })
+vim.keymap.set("n", "yofj", ":set filetype=javascript<cr>", { desc = "Set filetype to JS" })
+vim.keymap.set("n", "yofm", ":set filetype=markdown<cr>", { desc = "Set filetype to markdown" })
+vim.keymap.set("n", "yofv", ":set filetype=vim<cr>", { desc = "Set filetype to vim" })
+vim.keymap.set("n", "yofc", ":set filetype=clojure<cr>", { desc = "Set filetype to clojure" })
+vim.keymap.set("n", "yoff", ":set filetype=", { desc = "Set filetype (prompt)" })
+vim.keymap.set("n", "yof", ":set filetype=", { desc = "Set filetype (prompt)" })
+-- }}}
+
+-- Moving back and forth between lines of same or lower indentation {{{
+vim.keymap.set(
+  "n",
+  "<c-k>",
+  ":call mappings#NextIndent(0, 0, 0 )<CR>_",
+  { silent = true, desc = "Move up to previous line with same indent" }
+)
+vim.keymap.set(
+  "n",
+  "<c-j>",
+  ":call mappings#NextIndent(0, 1, 0 )<CR>_",
+  { silent = true, desc = "Move up to next line with same indent" }
+)
+vim.keymap.set(
+  "n",
+  "<c-h>",
+  ":call mappings#NextIndent(0, 0, -1)<CR>_",
+  { silent = true, desc = "Move up to previous less indented line" }
+)
+vim.keymap.set(
+  "n",
+  "<c-l>",
+  ":call mappings#NextIndent(0, 1, 1 )<CR>_",
+  { silent = true, desc = "Move down to next more indented line" }
+)
+-- nnoremap <silent> <c-L> :call      mappings#NextIndent(0, 0, 1 )<CR>_
+-- nnoremap <silent> <c-H> :call      mappings#NextIndent(0, 1, -1)<CR>_
+vim.keymap.set(
+  "v",
+  "<c-k>",
+  [[<Esc>:call mappings#NextIndent(0, 0, 0 )<CR>m'gv'']],
+  { silent = true, desc = "Move up to previous line with same indent" }
+)
+vim.keymap.set(
+  "v",
+  "<c-j>",
+  [[<Esc>:call mappings#NextIndent(0, 1, 0 )<CR>m'gv'']],
+  { silent = true, desc = "Move up to next line with same indent" }
+)
+vim.keymap.set(
+  "v",
+  "<c-h>",
+  [[<Esc>:call mappings#NextIndent(0, 0, -1)<CR>m'gv'']],
+  { silent = true, desc = "Move up to previous less indented line" }
+)
+vim.keymap.set(
+  "v",
+  "<c-l>",
+  [[<Esc>:call mappings#NextIndent(0, 1, 1 )<CR>m'gv'']],
+  { silent = true, desc = "Move down to next more indented line" }
+)
+-- vnoremap <silent> <c-L> <Esc>:call mappings#NextIndent(0, 0, 1 )<CR>m'gv''
+-- vnoremap <silent> <c-H> <Esc>:call mappings#NextIndent(0, 1, -1)<CR>m'gv''
+vim.keymap.set(
+  "o",
+  "<c-k>",
+  ":<c-u>normal V<c-v><c-k><cr>",
+  { silent = true, desc = "Move up to previous line with same indent" }
+)
+vim.keymap.set(
+  "o",
+  "<c-j>",
+  ":<c-u>normal V<c-v><c-j><cr>",
+  { silent = true, desc = "Move up to next line with same indent" }
+)
+vim.keymap.set(
+  "o",
+  "<c-h>",
+  ":<c-u>normal V<c-v><c-h>j<cr>",
+  { silent = true, desc = "Move up to previous less indented line" }
+)
+vim.keymap.set(
+  "o",
+  "<c-l>",
+  ":<c-u>normal V<c-v><c-l>k<cr>",
+  { silent = true, desc = "Move down to next more indented line" }
+)
+-- onoremap <silent> <c-L> _:call     mappings#NextIndent(0, 0, 1 )<CR>_
+-- onoremap <silent> <c-H> $:call     mappings#NextIndent(0, 1, -1)<CR>$
+-- }}}
+
+-- Highlight Word {{{
+function InterestingWordsUpdateHighlight()
+  vim.cmd([[
+  hi! def InterestingWord1 guifg=#000000 ctermfg=16 guibg=#ffa724 ctermbg=214
+  hi! def InterestingWord2 guifg=#000000 ctermfg=16 guibg=#aeee00 ctermbg=154
+  hi! def InterestingWord3 guifg=#000000 ctermfg=16 guibg=#00afff ctermbg=39
+  hi! def InterestingWord4 guifg=#000000 ctermfg=16 guibg=#b88853 ctermbg=137
+  hi! def InterestingWord5 guifg=#000000 ctermfg=16 guibg=#ff9eb8 ctermbg=211
+  hi! def InterestingWord6 guifg=#000000 ctermfg=16 guibg=#df0000 ctermbg=160
+  hi! def InterestingWord7 guifg=#000000 ctermfg=16 guibg=#df5fff ctermbg=171
+  hi! def InterestingWord8 guifg=#000000 ctermfg=16 guibg=#c0c0c0 ctermbg=7
+  hi! def InterestingWord9 guifg=#000000 ctermfg=16 guibg=#00ffff ctermbg=14
+  ]])
+end
+InterestingWordsUpdateHighlight()
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+  pattern = "*",
+  group = vim.api.nvim_create_augroup("InterestingWords", { clear = true }),
+  callback = function()
+    InterestingWordsUpdateHighlight()
+  end,
+})
+
+vim.keymap.set("n", "<leader>1", ":call mappings#HiInterestingWord(0, 1)<cr>", { desc = "Highlight word yellow" })
+vim.keymap.set("n", "<leader>2", ":call mappings#HiInterestingWord(0, 2)<cr>", { desc = "Highlight word green" })
+vim.keymap.set("n", "<leader>3", ":call mappings#HiInterestingWord(0, 3)<cr>", { desc = "Highlight word blue" })
+vim.keymap.set("n", "<leader>4", ":call mappings#HiInterestingWord(0, 4)<cr>", { desc = "Highlight word brown" })
+vim.keymap.set("n", "<leader>5", ":call mappings#HiInterestingWord(0, 5)<cr>", { desc = "Highlight word pink" })
+vim.keymap.set("n", "<leader>6", ":call mappings#HiInterestingWord(0, 6)<cr>", { desc = "Highlight word red" })
+vim.keymap.set("n", "<leader>7", ":call mappings#HiInterestingWord(0, 7)<cr>", { desc = "Highlight word purple" })
+vim.keymap.set("n", "<leader>8", ":call mappings#HiInterestingWord(0, 8)<cr>", { desc = "Highlight word grey" })
+vim.keymap.set("n", "<leader>9", ":call mappings#HiInterestingWord(0, 9)<cr>", { desc = "Highlight word cyan" })
+vim.keymap.set("x", "<leader>1", ":call mappings#HiInterestingWord(1, 1)<cr>", { desc = "Highlight word yellow" })
+vim.keymap.set("x", "<leader>2", ":call mappings#HiInterestingWord(1, 2)<cr>", { desc = "Highlight word green" })
+vim.keymap.set("x", "<leader>3", ":call mappings#HiInterestingWord(1, 3)<cr>", { desc = "Highlight word blue" })
+vim.keymap.set("x", "<leader>4", ":call mappings#HiInterestingWord(1, 4)<cr>", { desc = "Highlight word brown" })
+vim.keymap.set("x", "<leader>5", ":call mappings#HiInterestingWord(1, 5)<cr>", { desc = "Highlight word pink" })
+vim.keymap.set("x", "<leader>6", ":call mappings#HiInterestingWord(1, 6)<cr>", { desc = "Highlight word red" })
+vim.keymap.set("x", "<leader>7", ":call mappings#HiInterestingWord(1, 7)<cr>", { desc = "Highlight word purple" })
+vim.keymap.set("x", "<leader>8", ":call mappings#HiInterestingWord(1, 8)<cr>", { desc = "Highlight word grey" })
+vim.keymap.set("x", "<leader>9", ":call mappings#HiInterestingWord(1, 9)<cr>", { desc = "Highlight word cyan" })
+-- }}}
+
+-- Map search to very magic by default
+vim.keymap.set("n", "/", "/\v", { desc = "Search (very magical flag)" })
+vim.keymap.set("n", "?", "?\v", { desc = "Search back (very magical flag)" })
+
+-- CTRL+SHIFT+6 to something easier
+vim.keymap.set("n", "<leader>n", "<c-^>", { desc = "Go to alternate file" })
+
+-- Terminal settings {{{
+-- Default <ESC> to exiting term mode
+vim.keymap.set("t", "<ESC>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+-- }}}
+
+-- }}}
+
+-- Leader {{{
+
+-- Substitute shortcut
+vim.keymap.set("n", "<leader>r", ":%s/", { desc = "Search and replace in file" })
+vim.keymap.set("x", "<leader>r", ":s/", { desc = "Search and replace in file" })
+
+-- Opening stuff (files, windows, etc)
+-- Files:
+-- ...
+-- Windows/buffers:
+vim.keymap.set("n", "<leader>ot", ":tabe<cr>", { desc = "New tab" })
+vim.keymap.set("n", "<leader>ov", ":vsp<cr>", { desc = "Split vertically" })
+vim.keymap.set("n", "<leader>os", ":sp<cr>", { desc = "Split horizontally" })
+vim.keymap.set("n", "<leader>oc", ":term<cr>", { desc = "New terminal" })
+vim.keymap.set("n", "<leader>oq", ":copen<cr>", { desc = "Open quickfix list" })
+vim.keymap.set("n", "<leader>ol", ":lopen<cr>", { desc = "Open location list" })
+vim.keymap.set("n", "<leader>on", ":enew<cr>", { desc = "New empty buffer" })
+
+-- Fast saving & quitting
+vim.keymap.set("n", "<leader>w", ":w<cr>", { desc = "Save file" })
+vim.keymap.set("n", "<leader>q", ":q<cr>", { desc = "Quit" })
+vim.keymap.set("n", "<leader>u", ":bd<cr>", { desc = "Delete buffer" })
+
+-- Set local path
+vim.keymap.set("n", "<leader>p", ":lcd %:p:h<CR>:pwd<CR>", { desc = "Set local path to current file's path" })
 -- }}}
 
 -- }}}
