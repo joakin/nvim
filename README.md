@@ -1,3 +1,3 @@
-## Vim dotfiles
+## Neovim config files
 
-These are the vim config files that I use on a daily basis.
+These are the neovim config files that I use on a daily basis.
