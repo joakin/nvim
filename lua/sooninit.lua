@@ -657,6 +657,7 @@ function InterestingWordsUpdateHighlight()
   hi! def InterestingWord9 guifg=#000000 ctermfg=16 guibg=#00ffff ctermbg=14
   ]])
 end
+
 InterestingWordsUpdateHighlight()
 
 vim.api.nvim_create_autocmd("ColorScheme", {
@@ -727,5 +728,60 @@ vim.keymap.set("n", "<leader>u", ":bd<cr>", { desc = "Delete buffer" })
 -- Set local path
 vim.keymap.set("n", "<leader>p", ":lcd %:p:h<CR>:pwd<CR>", { desc = "Set local path to current file's path" })
 -- }}}
+
+-- }}}
+
+-- Commands {{{
+
+vim.api.nvim_create_user_command("CopyMatches", "call commands#CopyMatches(<q-reg>)", {
+  desc = "Copy search matches to the quickfix list",
+  nargs = 0,
+  register = true,
+})
+
+vim.api.nvim_create_user_command("Pulse", "call commands#Pulse()", {
+  desc = "Pulse the current line",
+  nargs = 0,
+})
+
+vim.api.nvim_create_user_command("Qargs", "execute 'args ' . commands#QuickfixFilenames()", {
+  desc = "Place the quickfix list files in the arg list",
+  bar = true,
+  nargs = 0,
+})
+
+vim.api.nvim_create_user_command("FollowSymlink", ":exec 'file ' . resolve(expand('%:p')) | e", {
+  desc = "Place the quickfix list files in the arg list",
+  nargs = 0,
+})
+
+vim.api.nvim_create_user_command(
+  "SyntaxInfo",
+  [[
+    :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+      \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+      \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+  ]],
+  {
+    desc = "Print syntax information for tokens under the cursor",
+    nargs = 0,
+  }
+)
+
+vim.api.nvim_create_user_command("ToggleConceal", "call mappings#ToggleConceal(1)", {
+  desc = "Place the quickfix list files in the arg list",
+  nargs = 0,
+})
+
+-- Toggle "keep current line in the center of the screen" mode
+vim.api.nvim_create_user_command("LockCursorInCenterOfScreen ", "let &scrolloff=999-&scrolloff", {
+  desc = "Keep current line in the center of the screen",
+  nargs = 0,
+})
+
+vim.api.nvim_create_user_command("SyntaxSyncFromStart", ":syntax sync fromstart", {
+  desc = "Sync the file syntax from the start of the file",
+  nargs = 0,
+})
 
 -- }}}

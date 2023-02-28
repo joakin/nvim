@@ -22,32 +22,6 @@ endif
 
 lua require("sooninit")
 
-" Commands {{{
-
-command! -register CopyMatches call commands#CopyMatches(<q-reg>)
-
-command! -nargs=0 Pulse call commands#Pulse()
-
-command! -nargs=0 -bar Qargs execute 'args ' . commands#QuickfixFilenames()
-
-command! FollowSymlink :exec "file ". resolve(expand('%:p')) | e
-
-command! SyntaxInfo :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-      \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-      \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-
-command! -nargs=0 ToggleConceal call mappings#ToggleConceal(1)
-
-" Toggle "keep current line in the center of the screen" mode
-command! -nargs=0 LockCursorInCenterOfScreen let &scrolloff=999-&scrolloff
-
-" Markdown preview
-command! -nargs=0 MarkdownPreview !vmd % &
-
-command! SyntaxSyncFromStart :syntax sync fromstart
-
-" }}}
-
 " Statusline {{{
 
 " Change Git[(master)] to (master) from vim-fugitive/autoload/fugitive.vim
