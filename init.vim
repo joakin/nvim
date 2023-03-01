@@ -121,11 +121,6 @@ if has('autocmd')
 
     autocmd!
 
-    " Instant settings
-    autocmd BufWritePost $MYVIMRC :source $MYVIMRC
-    autocmd BufWritePost ~/.vim/.vimrc :source $MYVIMRC
-    autocmd BufWritePost ~/.nvim/.nvimrc :source $MYVIMRC
-
     " Remember last cursor position
     autocmd BufReadPost *
           \ if line("'\"") > 0 && line ("'\"") <= line("$") |
@@ -140,34 +135,24 @@ if has('autocmd')
 
     " Make current window more obvious by turning off/adjusting some features
     " in non-current windows.
-    " if exists('+colorcolumn')
-    "   autocmd BufEnter,FocusGained,VimEnter,WinEnter * if autocmds#should_colorcolumn() | let &l:colorcolumn='+' . join(range(0, 254), ',+') | endif
-    "   autocmd FocusLost,WinLeave * if autocmds#should_colorcolumn() | let &l:colorcolumn=join(range(1, 255), ',') | endif
-    " endif
     autocmd InsertLeave,VimEnter,WinEnter * if autocmds#should_cursorline() | setlocal cursorline | endif
     autocmd InsertEnter,WinLeave * if autocmds#should_cursorline() | setlocal nocursorline | endif
-    if has('statusline')
-      autocmd BufEnter,FocusGained,VimEnter,WinEnter * call autocmds#focus_statusline()
-      autocmd FocusLost,WinLeave * call autocmds#blur_statusline()
-    endif
+    autocmd BufEnter,FocusGained,VimEnter,WinEnter * call autocmds#focus_statusline()
+    autocmd FocusLost,WinLeave * call autocmds#blur_statusline()
 
     autocmd BufEnter,FocusGained,VimEnter,WinEnter * call autocmds#split_resize()
 
-    if has('nvim')
-      function! TerminalOptions()
-        setlocal nonumber norelativenumber | startinsert
-        silent au BufEnter <buffer> startinsert!
-        silent au BufLeave <buffer> stopinsert!
-      endfunction
-      autocmd TermOpen * call TerminalOptions()
-    endif
+    function! TerminalOptions()
+      setlocal nonumber norelativenumber | startinsert
+      silent au BufEnter <buffer> startinsert!
+      silent au BufLeave <buffer> stopinsert!
+    endfunction
+    autocmd TermOpen * call TerminalOptions()
 
     " Make sure text soft wraps in the preview window, and don't show numbers
     autocmd WinEnter * if &previewwindow | setlocal wrap nonu nornu | endif
 
-    if exists('##TextYankPost')
-      autocmd TextYankPost * silent! lua vim.highlight.on_yank()
-    endif
+    autocmd TextYankPost * silent! lua vim.highlight.on_yank()
   augroup END
 
 endif
@@ -199,12 +184,9 @@ if has('autocmd')
   " augroup end
   "
   " }}}
-
-  autocmd BufRead,BufNewFile */wikimedia/*.{js,php,css} call s:SetupWikimedia()
-  function s:SetupWikimedia()
-    setlocal noexpandtab tabstop=4 sw=0
-  endfunction
-
-
+  " autocmd BufRead,BufNewFile */wikimedia/*.{js,php,css} call s:SetupWikimedia()
+  " function s:SetupWikimedia()
+  "   setlocal noexpandtab tabstop=4 sw=0
+  " endfunction
 endif
 " }}}
