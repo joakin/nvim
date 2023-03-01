@@ -20,7 +20,7 @@ if g:isLinux && executable('wslview')
   let g:isWSL = 1
 endif
 
-lua require("sooninit")
+lua require("init")
 
 " Statusline {{{
 
