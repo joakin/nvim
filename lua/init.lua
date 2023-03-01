@@ -121,17 +121,12 @@ require("lazy").setup({
   "mustache/vim-mustache-handlebars",
   "tpope/vim-markdown",
   "stephpy/vim-yaml", -- Vim 7.4 yaml syntax is horrible slow
-  "chikamichi/mediawiki.vim",
   "tikhomirov/vim-glsl",
   "cespare/vim-toml",
   "briancollins/vim-jst",
   -- }}}
 
   -- Languages {{{
-
-  -- Go {{{
-  { "fatih/vim-go", build = ":GoUpdateBinaries" },
-  -- }}}
 
   -- Elm {{{
   "andys8/vim-elm-syntax",
@@ -146,26 +141,10 @@ require("lazy").setup({
   "leafgarland/typescript-vim",
   -- }}}
 
-  -- Clojure {{{
-  -- Language and repl integration
-  "tpope/vim-fireplace",
-  -- Clojure syntax files
-  "guns/vim-clojure-static",
-  "kien/rainbow_parentheses.vim",
-  -- }}}
-
   -- CSS {{{
   "1995eaton/vim-better-css-completion",
   "groenewege/vim-less",
   "cakebaker/scss-syntax.vim",
-  "wavded/vim-stylus",
-  -- }}}
-
-  -- PHP {{{
-  -- Syntax
-  "StanAngeloff/php.vim",
-  -- Better fold expressions
-  "swekaj/php-foldexpr.vim",
   -- }}}
 
   -- Rust {{{
@@ -407,19 +386,6 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- }}}
-
--- Rainbow parenthesis {{{
-vim.g.rbpt_colorpairs = {
-  { "13", "#6c71c4" },
-  { "5", "#d33682" },
-  { "1", "#dc322f" },
-  { "9", "#cb4b16" },
-  { "3", "#b58900" },
-  { "2", "#859900" },
-  { "4", "#268bd2" },
-  { "6", "#2aa198" },
-}
 -- }}}
 
 -- Ack (Ag) {{{
