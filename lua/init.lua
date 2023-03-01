@@ -471,6 +471,7 @@ vim.keymap.set("n", "<c-i>", "<c-i>zzzv")
 
 -- Line-wise movements
 vim.keymap.set("n", "H", "^", { desc = "Go to beginning of line" })
+vim.keymap.set("v", "H", "^", { desc = "Go to beginning of line" })
 vim.keymap.set("n", "L", "$", { desc = "Go to end of line" })
 vim.keymap.set("v", "L", "g_", { desc = "Go to end of line" })
 vim.keymap.set("n", "gH", "H", { desc = "Move cursor to top of window" })
@@ -655,8 +656,8 @@ vim.keymap.set("x", "<leader>9", ":call mappings#HiInterestingWord(1, 9)<cr>", {
 -- }}}
 
 -- Map search to very magic by default
-vim.keymap.set("n", "/", "/\v", { desc = "Search (very magical flag)" })
-vim.keymap.set("n", "?", "?\v", { desc = "Search back (very magical flag)" })
+vim.keymap.set("n", "/", "/\\v", { desc = "Search (very magical flag)" })
+vim.keymap.set("n", "?", "?\\v", { desc = "Search back (very magical flag)" })
 
 -- CTRL+SHIFT+6 to something easier
 vim.keymap.set("n", "<leader>n", "<c-^>", { desc = "Go to alternate file" })
@@ -671,8 +672,8 @@ vim.keymap.set("t", "<ESC>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 -- Leader {{{
 
 -- Substitute shortcut
-vim.keymap.set("n", "<leader>r", ":%s/", { desc = "Search and replace in file" })
-vim.keymap.set("x", "<leader>r", ":s/", { desc = "Search and replace in file" })
+vim.keymap.set("n", "<leader>r", ":%s/\\v", { desc = "Search and replace in file" })
+vim.keymap.set("x", "<leader>r", ":s/\\v", { desc = "Search and replace in file" })
 
 -- Opening stuff (files, windows, etc)
 -- Files:
