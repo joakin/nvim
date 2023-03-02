@@ -752,3 +752,71 @@ vim.api.nvim_create_user_command("SyntaxSyncFromStart", ":syntax sync fromstart"
 })
 
 -- }}}
+
+-- Statusline {{{
+function MyFugitiveStatusline()
+  local str = vim.fn.FugitiveStatusline()
+  return string.match(str, "%((.-)%)")
+end
+
+local function statusline()
+  local s = ""
+  s = s .. "%3*" -- Switch to User3 highlight group.
+  s = s .. " " -- Space
+  s = s .. "%n" -- Buffer number
+  s = s .. " " -- Space
+  s = s .. "%*" -- Rehighlight group.
+
+  s = s .. "%4*" -- Switch to User4 highlight group.
+  s = s .. " " -- Space
+  s = s .. "%{statusline#fileprefix()}" -- File path
+  s = s .. "%*" -- Rehighlight group.
+  s = s .. "%3*" -- Switch to User3 highlight group (bold).
+  s = s .. "%{statusline#filename()}" -- File path
+  s = s .. " " -- Space
+  s = s .. "%*" -- Rehighlight group.
+
+  s = s .. "%4*" -- Switch to User4 highlight group.
+  s = s .. " " -- Space
+  -- Needs to be all on one line:
+  --   %(                   Start item group.
+  --   [                    Left bracket (literal).
+  --   %M                   Modified flag: ,+/,- (modified/unmodifiable) or nothing.
+  --   %R                   Read-only flag: ,RO or nothing.
+  --   %{statusline#ft()}   Filetype (not using %Y because I don't want caps).
+  --   %{statusline#fenc()} File-encoding if not UTF-8.
+  --   ]                    Right bracket (literal).
+  --   %)                   End item group.
+  s = s .. "%(%M%R%{statusline#ft()}%{statusline#fenc()}%)"
+  s = s .. " " -- Space
+  s = s .. "%*" -- Rehighlight group.
+  s = s .. "%<" -- Truncation point, if not enough space
+
+  s = s .. "%=" -- Align right
+
+  s = s .. "%3*" -- Switch to User3 highlight group.
+  s = s .. " " -- Space
+  s = s .. "%<" -- Truncation point, if not enough space
+  s = s .. "%{v:lua.MyFugitiveStatusline()}"
+  s = s .. " " -- Space
+  s = s .. "%*" -- Rehighlight group.
+
+  s = s .. "%4*" -- Switch to User4 highlight group.
+  s = s .. " " -- Space
+  s = s .. "%{SleuthIndicator()}" -- Space settings
+  s = s .. " " -- Space
+  s = s .. "%l:%c/%L" -- Current line:Column number/total lines
+  s = s .. " " -- Space
+  s = s .. "%*" -- Rehighlight group.
+
+  s = s .. "%3*" -- Switch to User3 highlight group.
+  s = s .. " " -- Space
+  s = s .. "%p" -- Percentage through buffer.
+  s = s .. "%%" -- Literal %.
+  s = s .. "%*" -- Rehighlight group.
+  return s
+end
+
+vim.opt.statusline = statusline()
+
+-- }}}
