@@ -851,3 +851,36 @@ vim.cmd(
 vim.cmd([[iabbrev funciton function]])
 vim.cmd([[iabbrev funcitons functions]])
 -- }}}
+
+-- Autocommands {{{
+local joakin_autocmd = vim.api.nvim_create_augroup("joakin", { clear = true })
+
+-- Remember last cursor position
+vim.api.nvim_create_autocmd("BufReadPost", {
+  pattern = "*",
+  group = joakin_autocmd,
+  callback = function()
+    if vim.fn.line([['"]]) > 0 and vim.fn.line([['"]]) <= vim.fn.line("$") then
+      vim.cmd([[normal! g`"zvzz]])
+    end
+  end,
+})
+
+-- Autoclose popups when exiting insert mode
+vim.api.nvim_create_autocmd({ "InsertLeave" }, {
+  pattern = "*",
+  group = joakin_autocmd,
+  callback = function()
+    if vim.fn.pumvisible() == 0 then
+      vim.cmd([[silent! pclose]])
+    end
+  end,
+})
+
+-- Auto-reload file if changed on focus
+vim.api.nvim_create_autocmd({ "WinEnter", "FocusGained", "BufEnter" }, {
+  pattern = "*",
+  group = joakin_autocmd,
+  command = "checktime",
+})
+-- }}}

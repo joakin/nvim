@@ -29,18 +29,6 @@ if has('autocmd')
 
     autocmd!
 
-    " Remember last cursor position
-    autocmd BufReadPost *
-          \ if line("'\"") > 0 && line ("'\"") <= line("$") |
-          \   exe "normal! g`\"zvzz"                        |
-          \ endif
-
-    " Autoclose popups
-    autocmd CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
-
-    " Checktime on focus
-    autocmd WinEnter,FocusGained,BufEnter * :checktime
-
     " Make current window more obvious by turning off/adjusting some features
     " in non-current windows.
     autocmd InsertLeave,VimEnter,WinEnter * if autocmds#should_cursorline() | setlocal cursorline | endif
