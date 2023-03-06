@@ -41,30 +41,3 @@ function! statusline#fenc() abort
     return ''
   endif
 endfunction
-
-let s:statusline_status_highlight='Identifier'
-
-function! statusline#async_start() abort
-  let s:statusline_status_highlight='Constant'
-  call statusline#update_highlight()
-endfunction
-
-function! statusline#async_finish() abort
-  let s:statusline_status_highlight='Identifier'
-  call statusline#update_highlight()
-endfunction
-
-function! statusline#update_highlight() abort
-  " for filetype
-  hi! link User1 StatusLine
-
-  " for blurred statuslines
-  hi! link User2 MatchParen
-
-  " Normal + bold (used for file names).
-  hi! link User3 Normal
-
-  " StatusLineNC (used for path).
-  hi! link User4 StatusLineNC
-
-endfunction

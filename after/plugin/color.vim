@@ -47,6 +47,19 @@ function Highlights()
     " Info and Hints in White
     hi LspDiagnosticsVirtualTextInformation guifg=White ctermfg=White
     hi LspDiagnosticsVirtualTextHint guifg=White ctermfg=White
+
+
+    " for filetype
+    hi link User1 StatusLine
+
+    " for blurred statuslines
+    hi link User2 MatchParen
+
+    " Normal + bold (used for file names).
+    hi link User3 Normal
+
+    " StatusLineNC (used for path).
+    hi link User4 StatusLineNC
   endif
 endfunction
 
