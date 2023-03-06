@@ -884,4 +884,41 @@ vim.api.nvim_create_autocmd({ "WinEnter", "FocusGained", "BufEnter" }, {
   group = joakin_autocmd,
   command = "checktime",
 })
+
+-- Make current window more obvious by turning off/adjusting some features
+-- in non-current windows.
+vim.api.nvim_create_autocmd({ "InsertLeave", "VimEnter", "WinEnter" }, {
+  pattern = "*",
+  group = joakin_autocmd,
+  callback = function()
+    if vim.fn["autocmds#should_cursorline"]() then
+      vim.opt_local.cursorline = true
+    end
+  end,
+})
+vim.api.nvim_create_autocmd({ "InsertEnter", "WinLeave" }, {
+  pattern = "*",
+  group = joakin_autocmd,
+  callback = function()
+    if vim.fn["autocmds#should_cursorline"]() then
+      vim.opt_local.cursorline = false
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "VimEnter", "WinEnter" }, {
+  pattern = "*",
+  group = joakin_autocmd,
+  callback = function()
+    vim.fn["autocmds#focus_statusline"]()
+  end,
+})
+vim.api.nvim_create_autocmd({ "FocusLost", "WinLeave" }, {
+  pattern = "*",
+  group = joakin_autocmd,
+  callback = function()
+    vim.fn["autocmds#blur_statusline"]()
+  end,
+})
+
 -- }}}

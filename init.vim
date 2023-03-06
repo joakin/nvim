@@ -29,13 +29,6 @@ if has('autocmd')
 
     autocmd!
 
-    " Make current window more obvious by turning off/adjusting some features
-    " in non-current windows.
-    autocmd InsertLeave,VimEnter,WinEnter * if autocmds#should_cursorline() | setlocal cursorline | endif
-    autocmd InsertEnter,WinLeave * if autocmds#should_cursorline() | setlocal nocursorline | endif
-    autocmd BufEnter,FocusGained,VimEnter,WinEnter * call autocmds#focus_statusline()
-    autocmd FocusLost,WinLeave * call autocmds#blur_statusline()
-
     autocmd BufEnter,FocusGained,VimEnter,WinEnter * call autocmds#split_resize()
 
     function! TerminalOptions()
