@@ -501,12 +501,13 @@ vim.keymap.set(
 )
 
 -- Command line maps
-vim.keymap.set(
-  "c",
-  "<expr>%%",
-  [[getcmdtype() == ':' ? expand('%:h').'/' : '%%']],
-  { desc = "Expand into current file's folder" }
-)
+vim.keymap.set("c", "%%", function()
+  if vim.fn.getcmdtype() == ":" then
+    return vim.fn.expand("%:h") .. "/"
+  else
+    return "%%"
+  end
+end, { expr = true, desc = "Expand into current file's folder" })
 vim.keymap.set("c", "<c-n>", "<down>", { desc = "Previous command" })
 vim.keymap.set("c", "<c-p>", "<up>", { desc = "Next command" })
 
