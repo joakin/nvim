@@ -126,6 +126,15 @@ local servers = {
         -- disableElmLSDiagnostics = true,
       },
     },
+    on_attach = function(client, bufnr)
+      -- Force incremental sync to true since elm language server always assumes
+      -- it like that.
+      -- https://github.com/elm-tooling/elm-language-server/issues/503#issuecomment-773922548
+      if client.config.flags then
+        client.config.flags.allow_incremental_sync = true
+      end
+      on_attach(client, bufnr)
+    end,
   },
   html = {},
   vuels = {},
