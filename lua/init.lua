@@ -1,19 +1,19 @@
 -- Init {{{
-local isMac = 0
-if vim.fn.has("macunix") == 1 then
-  isMac = 1
+local isMac = false
+if vim.fn.has("macunix") == true then
+  isMac = true
 end
-local isWindows = 0
-if vim.fn.has("win32") == 1 then
-  isWindows = 1
+local isWindows = false
+if vim.fn.has("win32") == true then
+  isWindows = true
 end
-local isLinux = 0
-if vim.fn.has("unix") == 1 then
-  isLinux = 1
+local isLinux = false
+if vim.fn.has("unix") == true then
+  isLinux = true
 end
-local isWSL = 0
+local isWSL = false
 if isLinux and vim.fn.executable("wslview") then
-  isWSL = 1
+  isWSL = true
 end
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -931,7 +931,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "VimEnter", "WinEnter" 
 })
 
 -- Settings for terminal buffers
-vim.api.nvim_create_autocmd({ "TermOpen" }, {
+vim.api.nvim_create_autocmd("TermOpen", {
   pattern = "*",
   group = joakin_autocmd,
   callback = function()
@@ -940,26 +940,79 @@ vim.api.nvim_create_autocmd({ "TermOpen" }, {
     vim.cmd("startinsert")
   end,
 })
-vim.api.nvim_create_autocmd({ "TermEnter" }, {
+vim.api.nvim_create_autocmd("TermEnter", {
   pattern = "*",
   group = joakin_autocmd,
   command = "startinsert!",
 })
-vim.api.nvim_create_autocmd({ "TermLeave" }, {
+vim.api.nvim_create_autocmd("TermLeave", {
   pattern = "*",
   group = joakin_autocmd,
   command = "stopinsert!",
 })
 
 -- Make sure text soft wraps in the preview window, and don't show numbers
--- autocmd WinEnter * if &previewwindow | setlocal wrap nonu nornu | endif
-vim.api.nvim_create_autocmd({ "TermOpen" }, {
+-- Unsure if this is actually used nowadays in my day to day
+vim.api.nvim_create_autocmd("WinEnter", {
   pattern = "*",
   group = joakin_autocmd,
   callback = function()
-    vim.opt_local.number = false
-    vim.opt_local.relativenumber = false
-    vim.cmd("startinsert")
+    if vim.o.previewwindow then
+      vim.opt_local.wrap = true
+      vim.opt_local.number = false
+      vim.opt_local.relativenumber = false
+    end
   end,
 })
+
+-- Highlight text when yanked
+vim.api.nvim_create_autocmd("TextYankPost", {
+  pattern = "*",
+  group = joakin_autocmd,
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+})
+
+-- Use foldmethod=marker when editing init.lua
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = "init.lua",
+  group = joakin_autocmd,
+  callback = function()
+    vim.opt_local.foldmethod = "marker"
+  end,
+})
+
+-- }}}
+
+-- Project settings {{{
+
+-- Example of project settings {{{
+-- From old .vimrc. Here in case useful as a reference in the future
+-- augroup project_settings
+--   autocmd!
+--   autocmd BufNewFile,BufRead ~/dev/projects/wikimedia/* setlocal softtabstop=4 shiftwidth=4 tabstop=4
+-- augroup END
+--
+-- Can also use (thanks to 'MarcWeber/vim-addon-local-vimrc'):
+-- Put .vimrc in the folder of the project (or parent folders) with autocmds
+-- too instead of settings here, like this:
+-- project/.vimrc
+-- augroup LOCAL_SETUP
+--   " using vim-addon-sql providing alias aware SQL completion for .sql files and PHP:
+--   autocmd BufRead,BufNewFile *.sql,*.php call vim_addon_sql#Connect('mysql',{'database':'DATABASE', 'user':'USER', 'password' : 'PASSWORD'})
+
+--   " for php use tab as indentation character. Display a tab as 4 spaces:
+--   " autocmd BufRead,BufNewFile *.php setlocal noexpandtab| setlocal tabstop=4 | setlocal sw=4
+--   autocmd FileType php setlocal noexpandtab| setlocal tabstop=4 | setlocal sw=4
+
+--   " hint: for indentation settings modelines can be an alternative as well as
+--   " various plugins trying to set vim's indentation based on file contents.
+-- augroup end
+--
+-- }}}
+-- autocmd BufRead,BufNewFile */wikimedia/*.{js,php,css} call s:SetupWikimedia()
+-- function s:SetupWikimedia()
+--   setlocal noexpandtab tabstop=4 sw=0
+-- endfunction
 -- }}}
