@@ -921,4 +921,45 @@ vim.api.nvim_create_autocmd({ "FocusLost", "WinLeave" }, {
   end,
 })
 
+-- Resize panes to a minimum size when shifting to them
+vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "VimEnter", "WinEnter" }, {
+  pattern = "*",
+  group = joakin_autocmd,
+  callback = function()
+    vim.fn["autocmds#split_resize"]()
+  end,
+})
+
+-- Settings for terminal buffers
+vim.api.nvim_create_autocmd({ "TermOpen" }, {
+  pattern = "*",
+  group = joakin_autocmd,
+  callback = function()
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
+    vim.cmd("startinsert")
+  end,
+})
+vim.api.nvim_create_autocmd({ "TermEnter" }, {
+  pattern = "*",
+  group = joakin_autocmd,
+  command = "startinsert!",
+})
+vim.api.nvim_create_autocmd({ "TermLeave" }, {
+  pattern = "*",
+  group = joakin_autocmd,
+  command = "stopinsert!",
+})
+
+-- Make sure text soft wraps in the preview window, and don't show numbers
+-- autocmd WinEnter * if &previewwindow | setlocal wrap nonu nornu | endif
+vim.api.nvim_create_autocmd({ "TermOpen" }, {
+  pattern = "*",
+  group = joakin_autocmd,
+  callback = function()
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
+    vim.cmd("startinsert")
+  end,
+})
 -- }}}

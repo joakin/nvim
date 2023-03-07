@@ -29,15 +29,6 @@ if has('autocmd')
 
     autocmd!
 
-    autocmd BufEnter,FocusGained,VimEnter,WinEnter * call autocmds#split_resize()
-
-    function! TerminalOptions()
-      setlocal nonumber norelativenumber | startinsert
-      silent au BufEnter <buffer> startinsert!
-      silent au BufLeave <buffer> stopinsert!
-    endfunction
-    autocmd TermOpen * call TerminalOptions()
-
     " Make sure text soft wraps in the preview window, and don't show numbers
     autocmd WinEnter * if &previewwindow | setlocal wrap nonu nornu | endif
 
