@@ -36,6 +36,7 @@ function Highlights()
     hi StatusLineNC cterm=none ctermfg=239 ctermbg=232
     hi Comment ctermfg=240
     hi CursorLine ctermbg=233
+    hi Visual cterm=none ctermbg=53 guibg=#5f005f
     " hi StatusLine ctermbg=none ctermfg=249
     " Normal         xxx ctermfg=250 guifg=#B3B8C4 guibg=#111314
     "
