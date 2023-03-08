@@ -180,7 +180,7 @@ require("lazy").setup({
   "fxn/vim-monochrome",
   "sjl/badwolf",
   "reedes/vim-colors-pencil",
-  "morhetz/gruvbox",
+  "gruvbox-community/gruvbox",
   "tpope/vim-vividchalk",
   "NLKNguyen/papercolor-theme",
   "altercation/vim-colors-solarized",
@@ -198,6 +198,8 @@ require("lazy").setup({
 if vim.fn.has("gui_running") == 0 then
   vim.opt.ttimeoutlen = 100
 end
+
+vim.opt.termguicolors = true
 
 -- Tab size
 vim.opt.softtabstop = 2
@@ -340,8 +342,9 @@ vim.opt.conceallevel = 2
 
 -- Popup menu
 vim.opt.pumheight = 5
--- TODO: Figure out why it isn't working
--- vim.opt.pumblend = 30
+if vim.opt.termguicolors:get() then
+  vim.opt.pumblend = 3
+end
 
 -- }}}
 

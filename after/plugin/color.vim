@@ -25,18 +25,18 @@ augroup END
 
 function Highlights()
   if &background == 'dark'
-    hi Normal ctermbg=none
-    hi LineNr ctermbg=none
-    hi NonText ctermbg=none
-    hi ColorColumn ctermbg=none
-    hi SignColumn ctermbg=none
-    hi VertSplit ctermbg=none
-    hi Folded ctermbg=234 ctermfg=59
-    hi StatusLine cterm=none ctermbg=none
-    hi StatusLineNC cterm=none ctermfg=239 ctermbg=232
-    hi Comment ctermfg=240
-    hi CursorLine ctermbg=233
-    hi Visual cterm=none ctermbg=53 guibg=#5f005f
+    hi Normal ctermbg=none guibg=none
+    hi LineNr ctermbg=none guibg=none
+    hi NonText ctermbg=none guibg=none
+    hi ColorColumn ctermbg=none guibg=none
+    hi SignColumn ctermbg=none guibg=none
+    hi VertSplit ctermbg=none guibg=none
+    hi Folded ctermbg=234 ctermfg=59 guibg=#1c1c1c guifg=#5f5f5f
+    hi StatusLine cterm=none ctermbg=none gui=none guibg=none
+    hi StatusLineNC cterm=none ctermbg=232 ctermfg=239 gui=none guibg=#080808 guifg=#4e4e4e
+    hi Comment ctermfg=240 guifg=#585858
+    hi CursorLine ctermbg=233 guibg=#121212
+    hi Visual cterm=none ctermbg=53 gui=none guibg=#5f005f
     " hi StatusLine ctermbg=none ctermfg=249
     " Normal         xxx ctermfg=250 guifg=#B3B8C4 guibg=#111314
     "
