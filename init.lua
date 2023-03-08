@@ -225,16 +225,16 @@ vim.opt.inccommand = "split"
 vim.opt.showmatch = true -- Jump to bracket/parens briefly
 vim.opt.matchtime = 1 --  Time of the jump of showmatch
 
-local directory = "~/.nvimswap/"
+local directory = vim.fn.expand("~/.nvimswap/")
 vim.opt.directory = directory
-local undodir = "~/.nvimundo/"
+local undodir = vim.fn.expand("~/.nvimundo/")
 vim.opt.undodir = undodir
 -- Make those folders automatically if they don't already exist.
-if vim.fn.isdirectory(vim.fn.expand(undodir)) == 0 then
-  vim.fn.mkdir(vim.fn.expand(undodir), "p")
+if vim.fn.isdirectory(undodir) == 0 then
+  vim.fn.mkdir(undodir, "p")
 end
-if vim.fn.isdirectory(vim.fn.expand(directory)) == 0 then
-  vim.fn.mkdir(vim.fn.expand(directory), "p")
+if vim.fn.isdirectory(directory) == 0 then
+  vim.fn.mkdir(directory, "p")
 end
 
 vim.opt.completeopt = { "menu", "menuone", "preview" } --  ,"noinsert","noselect"
