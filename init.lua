@@ -760,7 +760,7 @@ vim.api.nvim_create_user_command("SyntaxSyncFromStart", ":syntax sync fromstart"
 -- Statusline {{{
 function MyFugitiveStatusline()
   local str = vim.fn.FugitiveStatusline()
-  return string.match(str, "%((.-)%)")
+  return string.match(str, "%((.-)%)") or ""
 end
 
 local function statusline()
