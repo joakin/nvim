@@ -306,8 +306,10 @@ if vim.fn.has("gui_running") == 1 then
     vim.opt.linespace = 8
   end
 
-  vim.opt.guioptions = { "c" }
-  vim.opt.guioptions:remove({ "T" })
+  vim.cmd([[
+    set guioptions="c"
+    set guioptions-="T"
+  ]])
 end
 vim.opt.wildignore:append({
   ".hg",
