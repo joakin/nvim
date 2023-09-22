@@ -102,6 +102,7 @@ local on_attach = function(client, bufnr)
 end
 
 local servers = {
+  ols = {},
   ocamllsp = {},
   rust_analyzer = {},
   tsserver = {

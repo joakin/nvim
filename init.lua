@@ -155,6 +155,10 @@ require("lazy").setup({
   -- GraphQL {{{
   "jparise/vim-graphql",
   -- }}}
+
+  -- Odin {{{
+  "Tetralux/odin.vim",
+  -- }}}
   -- }}}
 
   -- External tools {{{
