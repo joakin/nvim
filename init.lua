@@ -413,6 +413,10 @@ require("plugins/cmp")
 require("config/lsp")
 -- }}}
 
+-- Copilot {{{
+require("plugins/copilot")
+-- }}}
+
 -- Gist {{{
 if isMac then
   vim.g.gist_clip_command = "pbcopy"
