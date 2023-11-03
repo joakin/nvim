@@ -170,6 +170,8 @@ require("lazy").setup({
   "tpope/vim-rhubarb", -- Support github for Gbrowse
   -- Unix commands (Delete, Remove, Move, Chmod, Mkdir, Find, Locate, Wall, SudoWrite, SudoEdit)
   "tpope/vim-eunuch",
+  -- Copilot
+  "github/copilot.vim",
   -- }}}
 
   -- Internets {{{
