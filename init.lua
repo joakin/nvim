@@ -48,23 +48,41 @@ require("lazy").setup({
 
       -- Additional lua configuration, makes nvim stuff amazing!
       "folke/neodev.nvim",
+
+      {
+        "jose-elias-alvarez/null-ls.nvim",
+        dependencies = {
+          "nvim-lua/plenary.nvim",
+        },
+      },
+
+      "hrsh7th/nvim-cmp",
     },
+    config = function()
+      require("config/lsp")
+    end,
   },
+
+  -- Autocompletion & Snippets
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "hrsh7th/nvim-cmp",
     dependencies = {
-      "nvim-lua/plenary.nvim",
+      -- Snippet engine
+      {
+        "L3MON4D3/LuaSnip",
+        config = function()
+          require("plugins/luasnip")
+        end,
+      },
+      "saadparwaiz1/cmp_luasnip",
+      -- Completion sources
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-buffer",
     },
+    config = function()
+      require("plugins/cmp")
+    end,
   },
-
-  -- Snippets
-  "L3MON4D3/LuaSnip", -- Need a snippet engine for nvim-cmp
-
-  -- Autocompletion
-  "hrsh7th/cmp-nvim-lsp",
-  "saadparwaiz1/cmp_luasnip",
-  "hrsh7th/cmp-buffer",
-  "hrsh7th/nvim-cmp",
 
   -- Highlight, edit, and navigate code
   {
@@ -436,12 +454,6 @@ if vim.fn.executable("ag") == 1 then
   vim.opt.grepprg = "ag --nogroup --nocolor --ignore-case --column"
   vim.opt.grepformat = "%f:%l:%c:%m,%f:%l:%m"
 end
--- }}}
-
--- NVIM LSP {{{
-require("plugins/luasnip")
-require("plugins/cmp")
-require("config/lsp")
 -- }}}
 
 -- Gist {{{
