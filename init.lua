@@ -53,9 +53,23 @@ require("lazy").setup({
   "saadparwaiz1/cmp_luasnip",
   "hrsh7th/cmp-buffer",
   "hrsh7th/nvim-cmp",
+
+  -- Highlight, edit, and navigate code
+  {
+    "nvim-treesitter/nvim-treesitter",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter-textobjects",
+    },
+    build = ":TSUpdate",
+    config = function()
+      require("plugins/treesitter")
+    end,
+  },
   -- }}}
 
   -- Basics {{{
+  -- Show you pending keybinds.
+  { "folke/which-key.nvim", opts = {} },
   -- Enable repeat for plugins that support it
   "tpope/vim-repeat",
   -- Fix some netrw ( - for up dir, . or ! for cmd with file, cg/cl to cd/lcd, ~ )
