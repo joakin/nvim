@@ -39,10 +39,22 @@ vim.g.maplocalleader = "\\"
 require("lazy").setup({
   -- Neovim {{{
   -- LSP servers
-  "neovim/nvim-lspconfig",
+  {
+    "neovim/nvim-lspconfig",
+    dependencies = {
+      -- Useful status updates for LSP
+      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
+      { "j-hui/fidget.nvim", tag = "legacy", opts = {} },
+
+      -- Additional lua configuration, makes nvim stuff amazing!
+      "folke/neodev.nvim",
+    },
+  },
   {
     "jose-elias-alvarez/null-ls.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
   },
 
   -- Snippets
