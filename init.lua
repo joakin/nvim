@@ -197,7 +197,12 @@ require("lazy").setup({
   -- Unix commands (Delete, Remove, Move, Chmod, Mkdir, Find, Locate, Wall, SudoWrite, SudoEdit)
   "tpope/vim-eunuch",
   -- Copilot
-  "github/copilot.vim",
+  {
+    "github/copilot.vim",
+    config = function()
+      require("plugins/copilot")
+    end,
+  },
   -- }}}
 
   -- Internets {{{
@@ -437,10 +442,6 @@ end
 require("plugins/luasnip")
 require("plugins/cmp")
 require("config/lsp")
--- }}}
-
--- Copilot {{{
-require("plugins/copilot")
 -- }}}
 
 -- Gist {{{
