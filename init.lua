@@ -496,9 +496,6 @@ vim.keymap.set("x", "&", ":&&<CR>", { desc = "Repeat search with flags" })
 -- Make . work with a visual selection
 vim.keymap.set("v", ".", ":normal .<cr>", { desc = ". repeat with a visual selection" })
 
--- Easy one hand Esc
-vim.keymap.set("i", "ii", "<Esc>")
-
 -- Easier omnicompletion
 vim.keymap.set("i", "<c-space>", "<C-X><C-O>")
 
