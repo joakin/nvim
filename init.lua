@@ -944,7 +944,10 @@ vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "VimEnter", "WinEnter" 
   pattern = "*",
   group = joakin_autocmd,
   callback = function()
-    vim.fn["autocmds#split_resize"]()
+    -- Only resize if we are in a normal window, not a floating one
+    if vim.api.nvim_win_get_config(0).relative == "" then
+      vim.fn["autocmds#split_resize"]()
+    end
   end,
 })
 
