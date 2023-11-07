@@ -199,8 +199,6 @@ require("lazy").setup({
   -- }}}
 
   -- External tools {{{
-  -- Search with :Ack (using ag)
-  "mileszs/ack.vim",
   -- Git commands
   "tpope/vim-fugitive", -- Gcommit, Gstatus, Gdiff, etc.
   "junegunn/gv.vim", -- GV(!?)
@@ -409,14 +407,6 @@ vim.g.markdown_syntax_conceal = 1
 vim.g.netrw_liststyle = 1
 if isWSL then
   vim.g.netrw_browsex_viewer = "wslview"
-end
--- }}}
-
--- Ack (Ag) {{{
-if vim.fn.executable("ag") == 1 then
-  vim.g.ackprg = "ag --vimgrep"
-  vim.opt.grepprg = "ag --nogroup --nocolor --ignore-case --column"
-  vim.opt.grepformat = "%f:%l:%c:%m,%f:%l:%m"
 end
 -- }}}
 
