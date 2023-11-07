@@ -38,6 +38,9 @@ vim.g.maplocalleader = "\\"
 
 require("lazy").setup({
   -- Neovim {{{
+  -- Better vim.ui.{select,prompt}
+  "stevearc/dressing.nvim",
+
   -- Telescope
   {
     "nvim-telescope/telescope.nvim",
@@ -69,7 +72,9 @@ require("lazy").setup({
         },
       },
 
+      -- These two are used in the config file
       "hrsh7th/nvim-cmp",
+      "nvim-telescope/telescope.nvim",
     },
     config = function()
       require("config/lsp")
@@ -91,6 +96,7 @@ require("lazy").setup({
       -- Completion sources
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
     },
     config = function()
       require("plugins/cmp")
