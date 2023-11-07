@@ -11,7 +11,7 @@ local expr_opts = {
 }
 
 vim.keymap.set("i", "<C-G><C-J>", "copilot#Accept('<CR>')", expr_opts)
-vim.keymap.set("i", "<C-G>", "copilot#Accept('<CR>')", expr_opts)
+vim.keymap.set("i", "<C-J>", "copilot#Accept('<CR>')", expr_opts)
 vim.keymap.set("i", "<C-G><C-G>", "<Plug>(copilot-suggest)", opts)
 vim.keymap.set("i", "<C-G><C-E>", "<Plug>(copilot-dismiss)", opts)
 vim.keymap.set("i", "<C-G><C-N>", "<Plug>(copilot-next)", opts)
@@ -28,5 +28,5 @@ local function suggest_one_word()
   return vim.fn.split(text, [[\(\w\+\|\W\+\)\zs]])[1]
 end
 
-vim.keymap.set("i", "<C-J>", suggest_one_line, expr_opts)
-vim.keymap.set("i", "<C-L>", suggest_one_word, expr_opts)
+vim.keymap.set("i", "<C-L>", suggest_one_line, expr_opts)
+vim.keymap.set("i", "<C-G><C-L>", suggest_one_word, expr_opts)
