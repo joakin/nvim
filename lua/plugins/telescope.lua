@@ -1,5 +1,6 @@
 local telescope = require("telescope")
 local actions = require("telescope.actions")
+local builtin = require("telescope.builtin")
 
 -- Disable folding in Telescope's result window.
 local telescope_results_autocmd = vim.api.nvim_create_augroup("TelescopeResults", { clear = true })
@@ -44,7 +45,12 @@ vim.keymap.set("n", "<leader>sb", "<cmd>Telescope current_buffer_fuzzy_find<cr>"
 vim.keymap.set("n", "<leader>/", "<cmd>Telescope current_buffer_fuzzy_find<cr>", { desc = "Search *in* buffer" })
 vim.keymap.set("n", "<leader>ss", "<cmd>Telescope live_grep<cr>", { desc = "Search in files" })
 vim.keymap.set("n", "gS", "<cmd>Telescope live_grep<cr>", { desc = "Search in files" })
-vim.keymap.set({ "n", "x" }, "gs", "<cmd>Telescope grep_string<cr>", { desc = "Search selected string in files" })
+vim.keymap.set({ "n" }, "gs", "<cmd>Telescope grep_string<cr>", { desc = "Search word under cursor in files" })
+vim.keymap.set({ "x" }, "gs", function()
+  vim.cmd([[noau normal! "zy']])
+  local text = vim.fn.getreg("z")
+  builtin.grep_string({ search = text })
+end, { desc = "Search selected text in files" })
 
 vim.keymap.set("n", "<leader>sh", "<cmd>Telescope help_tags<cr>", { desc = "List help tags" })
 vim.keymap.set("n", "<leader>sc", "<cmd>Telescope commands<cr>", { desc = "List commands" })
