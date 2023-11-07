@@ -331,10 +331,10 @@ set foldtext=MyFoldText()
 
 -- }}}
 
-vim.opt.foldenable = true
+vim.opt.foldenable = false
 vim.opt.foldlevelstart = 0
 vim.opt.foldmarker = { "{{{", "}}}" }
-vim.opt.foldmethod = "indent"
+vim.opt.foldmethod = "syntax"
 
 -- Invisible char settings (list)
 vim.opt.listchars = { tab = "» ", trail = "·", extends = "…", precedes = "…", nbsp = "&", eol = "¬" }
