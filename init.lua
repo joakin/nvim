@@ -38,6 +38,19 @@ vim.g.maplocalleader = "\\"
 
 require("lazy").setup({
   -- Neovim {{{
+  -- Telescope
+  {
+    "nvim-telescope/telescope.nvim",
+    branch = "0.1.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    },
+    config = function()
+      require("plugins/telescope")
+    end,
+  },
+
   -- LSP servers
   {
     "neovim/nvim-lspconfig",
