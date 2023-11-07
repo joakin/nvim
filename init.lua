@@ -109,18 +109,6 @@ require("lazy").setup({
   "tpope/vim-repeat",
   -- Fix some netrw ( - for up dir, . or ! for cmd with file, cg/cl to cd/lcd, ~ )
   "tpope/vim-vinegar",
-  -- File/Buffer/Tag finder
-  {
-    "junegunn/fzf.vim",
-    dependencies = {
-      {
-        "junegunn/fzf",
-        build = function()
-          vim.fn["fzf#install"]()
-        end,
-      },
-    },
-  },
   -- Like f but multiline and faster 's'
   "justinmk/vim-sneak",
   -- Align text :Tabularize
@@ -422,35 +410,6 @@ vim.g.netrw_liststyle = 1
 if isWSL then
   vim.g.netrw_browsex_viewer = "wslview"
 end
--- }}}
-
--- FZF {{{
--- augroup FZF
---   autocmd! FileType fzf
---   autocmd FileType fzf setlocal laststatus=0 noshowmode noruler
---     \| autocmd BufLeave <buffer> setlocal laststatus=2 showmode ruler
---   autocmd FileType fzf tnoremap <buffer> <Esc> <c-q>
--- augroup END
-local fzf_autocmd = vim.api.nvim_create_augroup("FZF", { clear = true })
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "fzf",
-  group = fzf_autocmd,
-  callback = function()
-    vim.opt_local.laststatus = 0
-    vim.opt_local.showmode = false
-    vim.opt_local.ruler = false
-    vim.api.nvim_create_autocmd("BufLeave", {
-      buffer = 0,
-      callback = function()
-        vim.opt_local.laststatus = 2
-        vim.opt_local.showmode = true
-        vim.opt_local.ruler = true
-      end,
-    })
-    vim.keymap.set("t", "<Esc>", "<c-q>", { buffer = true, desc = "Exit" })
-  end,
-})
-
 -- }}}
 
 -- Ack (Ag) {{{
