@@ -53,3 +53,6 @@ vim.keymap.set("n", "<leader>s:", "<cmd>Telescope command_history<cr>", { desc =
 vim.keymap.set("n", "<leader>s;", "<cmd>Telescope command_history<cr>", { desc = "List command history" })
 vim.keymap.set("n", "<leader>sm", "<cmd>Telescope marks<cr>", { desc = "List marks" })
 vim.keymap.set("n", "<leader>sr", "<cmd>Telescope registers<cr>", { desc = "List registers" })
+
+vim.keymap.set("n", "<leader>sgc", "<cmd>Telescope git_commits<cr>", { desc = "List git commits" })
+vim.keymap.set("n", "<leader>sgb", "<cmd>Telescope git_branches<cr>", { desc = "List git branches" })
