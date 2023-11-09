@@ -1,7 +1,7 @@
 nnoremap <leader>gg :Git 
 nnoremap <leader>ga :Git add -p<cr>
 nnoremap <leader>gs :Git<cr>
-nnoremap <leader>gb :Gblame<cr>
+nnoremap <leader>gb :Git blame<cr>
 nnoremap <leader>gr :Gread<cr>
 nnoremap <leader>gw :Gwrite<cr>
 nnoremap <leader>gc :Git commit --verbose<cr>
