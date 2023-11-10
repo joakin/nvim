@@ -29,8 +29,9 @@ treesitter.setup({
     "jsonc",
     "lua",
     "make",
-    "markdown",
-    "markdown_inline",
+    -- They crash in some markdown files
+    -- "markdown",
+    -- "markdown_inline",
     "ocaml",
     "odin",
     "prisma",
