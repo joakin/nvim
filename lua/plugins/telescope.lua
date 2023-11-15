@@ -1,5 +1,4 @@
 local telescope = require("telescope")
-local actions = require("telescope.actions")
 local builtin = require("telescope.builtin")
 
 -- Disable folding in Telescope's result window.
@@ -16,11 +15,28 @@ telescope.setup({
   defaults = {
     mappings = {
       i = {
-        ["<esc>"] = actions.close,
-        ["<C-k>"] = actions.move_selection_previous,
-        ["<C-j>"] = actions.move_selection_next,
-        ["<C-p>"] = actions.cycle_history_prev,
-        ["<C-n>"] = actions.cycle_history_next,
+        ["<esc>"] = "close",
+        ["<C-k>"] = "move_selection_previous",
+        ["<C-j>"] = "move_selection_next",
+        ["<C-p>"] = "cycle_history_prev",
+        ["<C-n>"] = "cycle_history_next",
+        ["<C-l>"] = require("telescope.actions.layout").toggle_preview,
+      },
+    },
+    preview = {
+      -- hide_on_startup = true, -- hide previewer when picker starts
+    },
+    path_display = { truncate = 1 },
+  },
+  pickers = {
+    find_files = {
+      hidden = true,
+    },
+    buffers = {
+      mappings = {
+        i = {
+          ["<bs>"] = "delete_buffer",
+        },
       },
     },
   },
@@ -38,12 +54,18 @@ end
 telescope.load_extension("fzf")
 
 vim.keymap.set("n", "<leader>f", "<cmd>Telescope find_files<cr>", { desc = "List files" })
+vim.keymap.set("n", "<leader>F", function()
+  builtin.find_files({ hidden = true, no_ignore = true })
+end, { desc = "List *all* files" })
 vim.keymap.set("n", "<leader>b", "<cmd>Telescope buffers<cr>", { desc = "List buffers" })
 vim.keymap.set("n", "<leader>sf", "<cmd>Telescope oldfiles<cr>", { desc = "List recent files" })
 
 vim.keymap.set("n", "<leader>sb", "<cmd>Telescope current_buffer_fuzzy_find<cr>", { desc = "Search *in* buffer" })
 vim.keymap.set("n", "<leader>/", "<cmd>Telescope current_buffer_fuzzy_find<cr>", { desc = "Search *in* buffer" })
 vim.keymap.set("n", "<leader>ss", "<cmd>Telescope live_grep<cr>", { desc = "Search in files" })
+vim.keymap.set("n", "<leader>sS", function()
+  builtin.live_grep({ hidden = true, no_ignore = true })
+end, { desc = "Search in *all* files" })
 vim.keymap.set("n", "gS", "<cmd>Telescope live_grep<cr>", { desc = "Search in files" })
 vim.keymap.set({ "n" }, "gs", "<cmd>Telescope grep_string<cr>", { desc = "Search word under cursor in files" })
 vim.keymap.set({ "x" }, "gs", function()
@@ -62,3 +84,5 @@ vim.keymap.set("n", "<leader>sr", "<cmd>Telescope registers<cr>", { desc = "List
 
 vim.keymap.set("n", "<leader>sgc", "<cmd>Telescope git_commits<cr>", { desc = "List git commits" })
 vim.keymap.set("n", "<leader>sgb", "<cmd>Telescope git_branches<cr>", { desc = "List git branches" })
+
+vim.keymap.set("n", "<leader>st", "<cmd>Telescope resume<cr>", { desc = "Open last picker" })
