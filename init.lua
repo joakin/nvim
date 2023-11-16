@@ -123,7 +123,19 @@ require("lazy").setup({
 
   -- Basics {{{
   -- Show you pending keybinds.
-  { "folke/which-key.nvim", opts = {} },
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    init = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 500
+    end,
+    opts = {
+      window = {
+        winblend = 3,
+      },
+    },
+  },
   -- Enable repeat for plugins that support it
   "tpope/vim-repeat",
   -- Fix some netrw ( - for up dir, . or ! for cmd with file, cg/cl to cd/lcd, ~ )
