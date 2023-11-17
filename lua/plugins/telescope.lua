@@ -9,6 +9,7 @@ return {
   config = function()
     local telescope = require("telescope")
     local builtin = require("telescope.builtin")
+    local multi_open_mappings = require("plugins.telescope.multi_open_mappings")
 
     -- Disable folding in Telescope's result window.
     local telescope_results_autocmd = vim.api.nvim_create_augroup("TelescopeResults", { clear = true })
@@ -20,44 +21,18 @@ return {
       end,
     })
 
-    local select_one_or_multi = function(cmd)
-      return function(prompt_bufnr)
-        local picker = require("telescope.actions.state").get_current_picker(prompt_bufnr)
-        local multi = picker:get_multi_selection()
-        if not vim.tbl_isempty(multi) then
-          require("telescope.actions").close(prompt_bufnr)
-          for _, j in pairs(multi) do
-            if j.path ~= nil then
-              vim.cmd(string.format("%s %s", cmd, j.path))
-            end
-          end
-        else
-          require("telescope.actions").select_default(prompt_bufnr)
-        end
-      end
-    end
-    local custom_actions = {
-      edit = select_one_or_multi("e"),
-      tabedit = select_one_or_multi("tabe"),
-      split = select_one_or_multi("sp"),
-      vsplit = select_one_or_multi("vsp"),
-    }
-
     telescope.setup({
       defaults = {
         mappings = {
-          i = {
+          i = vim.tbl_extend("force", {
             ["<esc>"] = "close",
             ["<C-k>"] = "move_selection_previous",
             ["<C-j>"] = "move_selection_next",
             ["<C-p>"] = "cycle_history_prev",
             ["<C-n>"] = "cycle_history_next",
             ["<C-l>"] = require("telescope.actions.layout").toggle_preview,
-            ["<C-v>"] = custom_actions.vsplit,
-            ["<C-x>"] = custom_actions.split,
-            ["<C-t>"] = custom_actions.tabedit,
-            ["<CR>"] = custom_actions.edit,
-          },
+          }, multi_open_mappings.i),
+          n = multi_open_mappings.n,
         },
         preview = {
           -- hide_on_startup = true, -- hide previewer when picker starts
