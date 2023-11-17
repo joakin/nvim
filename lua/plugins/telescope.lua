@@ -49,6 +49,7 @@ return {
               ["<bs>"] = "delete_buffer",
             },
           },
+          sort_mru = true,
         },
       },
     })
