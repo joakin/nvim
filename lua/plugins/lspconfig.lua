@@ -83,17 +83,13 @@ return {
         return { noremap = true, silent = true, desc = desc }
       end
 
-      vim.keymap.set("n", "gd", "<cmd>lua require('fzf-lua').lsp_definitions()<CR>", opts("Go to definition"))
-      vim.keymap.set("n", "<leader>ld", "<cmd>lua require('fzf-lua').lsp_definitions()<CR>", opts("Go to definition"))
-      vim.keymap.set("n", "gD", "<cmd>lua require('fzf-lua').lsp_typedefs()<CR>", opts("Go to type definition"))
-      vim.keymap.set("n", "<leader>lt", "<cmd>lua require('fzf-lua').lsp_typdefs()<CR>", opts("Go to type definition"))
+      vim.keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts("Go to definition"))
+      vim.keymap.set("n", "<leader>ld", "<cmd>Telescope lsp_definitions<CR>", opts("Go to definition"))
+      vim.keymap.set("n", "gD", "<cmd>Telescope lsp_type_definitions<CR>", opts("Go to type definition"))
+      vim.keymap.set("n", "<leader>lt", "<cmd>Telescope lsp_type_definitions<CR>", opts("Go to type definition"))
       vim.keymap.set("n", "<leader>lD", vim.lsp.buf.declaration, opts("Go to declaration"))
-      vim.keymap.set(
-        "n",
-        "<leader>li",
-        "<cmd>lua require('fzf-lua').lsp_implementations()<CR>",
-        opts("List implementations")
-      )
+
+      vim.keymap.set("n", "<leader>li", "<cmd>Telescope lsp_implementations<CR>", opts("List implementations"))
 
       vim.keymap.set("n", "gh", vim.lsp.buf.hover, opts("Show hover information"))
       vim.keymap.set("n", "K", vim.lsp.buf.hover, opts("Show hover information"))
@@ -106,42 +102,22 @@ return {
         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
       end, opts("List workspace folders"))
 
-      vim.keymap.set(
-        "n",
-        "<leader>ls",
-        "<cmd>lua require('fzf-lua').lsp_document_symbols()<CR>",
-        opts("Document symbols")
-      )
-      vim.keymap.set(
-        "n",
-        "<leader>lws",
-        "<cmd>lua require('fzf-lua').lsp_live_workspace_symbols()<CR>",
-        opts("Workspace symbols")
-      )
+      vim.keymap.set("n", "<leader>ls", "<cmd>Telescope lsp_document_symbols<CR>", opts("Document symbols"))
+      vim.keymap.set("n", "<leader>lws", "<cmd>Telescope lsp_workspace_symbols<CR>", opts("Workspace symbols"))
 
       vim.keymap.set("n", "<leader>lR", vim.lsp.buf.rename, opts("Rename symbol"))
       vim.keymap.set("n", "gR", vim.lsp.buf.rename, opts("Rename symbol"))
 
       vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action, opts("Code actions"))
 
-      vim.keymap.set("n", "gr", "<cmd>lua require('fzf-lua').lsp_references()<CR>", opts("References"))
-      vim.keymap.set("n", "<leader>lr", "<cmd>lua require('fzf-lua').lsp_references()<CR>", opts("References"))
+      vim.keymap.set("n", "gr", "<cmd>Telescope lsp_references<CR>", opts("References"))
+      vim.keymap.set("n", "<leader>lr", "<cmd>Telescope lsp_references<CR>", opts("References"))
 
       vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format, opts("Format buffer"))
       vim.keymap.set("n", "<leader>li", "<cmd>LspInfo<CR>", opts("LS information"))
 
-      vim.keymap.set(
-        "n",
-        "<leader>lE",
-        "<cmd>lua require('fzf-lua').lsp_document_diagnostics()<CR>",
-        opts("File diagnostics")
-      )
-      vim.keymap.set(
-        "n",
-        "<leader>lwe",
-        "<cmd>lua require('fzf-lua').lsp_workspace_diagnostics()<CR>",
-        opts("File diagnostics")
-      )
+      vim.keymap.set("n", "<leader>lE", "<cmd>Telescope diagnostics bufnr=0<CR>", opts("File diagnostics"))
+      vim.keymap.set("n", "<leader>lwe", "<cmd>Telescope diagnostics<CR>", opts("Workspace diagnostics"))
       vim.keymap.set("n", "<leader>le", vim.diagnostic.open_float, opts("Show diagnostic under cursor"))
       vim.keymap.set("n", "[w", vim.diagnostic.goto_prev, opts("Go to previous diagnostic"))
       vim.keymap.set("n", "[@", vim.diagnostic.goto_prev, opts("Go to previous diagnostic"))

@@ -12,7 +12,6 @@ return {
       },
     },
     select = {
-      backend = { "fzf_lua", "telescope", "fzf", "builtin", "nui" },
       mappings = {
         i = {
           ["<C-P>"] = "HistoryPrev",

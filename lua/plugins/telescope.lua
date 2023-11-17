@@ -1,8 +1,6 @@
 -- Telescope
-local enabled = false
 return {
   "nvim-telescope/telescope.nvim",
-  enable = enabled,
   branch = "0.1.x",
   dependencies = {
     "nvim-lua/plenary.nvim",
@@ -63,10 +61,6 @@ return {
     end
 
     telescope.load_extension("fzf")
-
-    if enabled == false then
-      return
-    end
 
     vim.keymap.set("n", "<leader>f", "<cmd>Telescope find_files<cr>", { desc = "List files" })
     vim.keymap.set("n", "<leader>F", function()
