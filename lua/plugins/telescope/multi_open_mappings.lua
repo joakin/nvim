@@ -4,6 +4,7 @@ local actions = require("telescope.actions")
 local action_state = require("telescope.actions.state")
 local transform_mod = require("telescope.actions.mt").transform_mod
 
+-- BUG: Default method shifts cursor one column to the right with live_grep :/
 local function multiopen(prompt_bufnr, method)
   local edit_file_cmd_map = {
     vertical = "vsplit",
