@@ -38,6 +38,7 @@ return {
           -- hide_on_startup = true, -- hide previewer when picker starts
         },
         path_display = { truncate = 1 },
+        file_ignore_patterns = { "^.git/" },
       },
       pickers = {
         find_files = {
