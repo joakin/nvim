@@ -24,6 +24,9 @@ augroup vimrc
 augroup END
 
 function Highlights()
+  hi Comment cterm=italic gui=italic
+  hi String cterm=italic gui=italic
+
   if &background == 'dark'
     hi Normal ctermbg=none guibg=none
     hi LineNr ctermbg=none guibg=none
