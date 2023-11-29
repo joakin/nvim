@@ -21,18 +21,18 @@ return {
     vim.keymap.set("i", "<C-G><C-N>", "<Plug>(copilot-next)", opts)
     vim.keymap.set("i", "<C-G><C-P>", "<Plug>(copilot-previous)", opts)
 
-    local function suggest_one_line()
+    local function accept_one_line()
       local suggestion = vim.fn["copilot#Accept"]("")
       local text = vim.fn["copilot#TextQueuedForInsertion"]()
       return vim.fn.split(text, [[[\n]\zs]])[1]
     end
-    local function suggest_one_word()
+    local function accept_one_word()
       local suggestion = vim.fn["copilot#Accept"]("")
       local text = vim.fn["copilot#TextQueuedForInsertion"]()
       return vim.fn.split(text, [[\(\w\+\|\W\+\)\zs]])[1]
     end
 
-    vim.keymap.set("i", "<C-L>", suggest_one_line, expr_opts)
-    vim.keymap.set("i", "<C-G><C-L>", suggest_one_word, expr_opts)
+    vim.keymap.set("i", "<C-L>", accept_one_line, expr_opts)
+    vim.keymap.set("i", "<C-G><C-L>", accept_one_word, expr_opts)
   end,
 }
