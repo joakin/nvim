@@ -3,6 +3,12 @@ return {
   "github/copilot.vim",
   config = function()
     vim.g.copilot_no_tab_map = true
+    vim.g.copilot_filetypes = {
+      gitcommit = true,
+      markdown = true,
+      json = true,
+      yaml = true,
+    }
 
     local opts = { noremap = true, silent = true }
     local expr_opts = {
