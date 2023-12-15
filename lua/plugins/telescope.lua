@@ -21,6 +21,21 @@ return {
       end,
     })
 
+    -- If rg or fd of fzf are not executables, print an error message prompting the user to install them.
+    if vim.fn.executable("rg") == 0 then
+      -- Required for live_grep
+      error("rg is not installed.")
+    end
+    if vim.fn.executable("fd") == 0 then
+      -- Required for find_files
+      error("fd is not installed.")
+    end
+    if vim.fn.executable("fzf") == 0 then
+      error("fzf is not installed.")
+    end
+
+    telescope.load_extension("fzf")
+
     telescope.setup({
       defaults = {
         mappings = {
@@ -52,19 +67,17 @@ return {
           },
           sort_mru = true,
         },
+        live_grep = {
+          mappings = {
+            i = {
+              ["<M-space>"] = function()
+                require("plugins.telescope.custom_live_grep")()
+              end,
+            },
+          },
+        },
       },
     })
-
-    -- If rg or fzf are not executables, print an error message prompting the user to install them.
-    if vim.fn.executable("rg") == 0 then
-      -- Required for live_grep
-      error("rg is not installed.")
-    end
-    if vim.fn.executable("fzf") == 0 then
-      error("fzf is not installed.")
-    end
-
-    telescope.load_extension("fzf")
 
     vim.keymap.set("n", "<leader>f", "<cmd>Telescope find_files<cr>", { desc = "List files" })
     vim.keymap.set("n", "<leader>F", function()
@@ -75,7 +88,9 @@ return {
 
     vim.keymap.set("n", "<leader>sb", "<cmd>Telescope current_buffer_fuzzy_find<cr>", { desc = "Search *in* buffer" })
     vim.keymap.set("n", "<leader>/", "<cmd>Telescope current_buffer_fuzzy_find<cr>", { desc = "Search *in* buffer" })
-    vim.keymap.set("n", "<leader>ss", "<cmd>Telescope live_grep<cr>", { desc = "Search in files" })
+    vim.keymap.set("n", "<leader>ss", function()
+      require("plugins.telescope.custom_live_grep")()
+    end, { desc = "Search in files (custom)" })
     vim.keymap.set("n", "<leader>sS", function()
       builtin.live_grep({ hidden = true, no_ignore = true })
     end, { desc = "Search in *all* files" })
@@ -98,6 +113,6 @@ return {
     vim.keymap.set("n", "<leader>sgc", "<cmd>Telescope git_commits<cr>", { desc = "List git commits" })
     vim.keymap.set("n", "<leader>sgb", "<cmd>Telescope git_branches<cr>", { desc = "List git branches" })
 
-    vim.keymap.set("n", "<leader>st", "<cmd>Telescope resume<cr>", { desc = "Open last picker" })
+    vim.keymap.set("n", "<leader>sp", "<cmd>Telescope resume<cr>", { desc = "Open last picker" })
   end,
 }
