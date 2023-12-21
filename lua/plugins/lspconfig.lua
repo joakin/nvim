@@ -150,7 +150,7 @@ return {
             onlyUpdateDiagnosticsOnSave = true,
             -- This disables elmls specific diagnostics like unused code, missing
             -- signature, etc. The elm make errors still show up.
-            -- disableElmLSDiagnostics = true,
+            disableElmLSDiagnostics = true,
           },
         },
         on_attach = function(client, bufnr)
