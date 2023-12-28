@@ -1,8 +1,11 @@
 -- Copilot
+
+-- no_tab_map needs to be set before loading the plugin
+vim.g.copilot_no_tab_map = true
+
 return {
   "github/copilot.vim",
   config = function()
-    vim.g.copilot_no_tab_map = true
     vim.g.copilot_filetypes = {
       gitcommit = true,
       markdown = true,
