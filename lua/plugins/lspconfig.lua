@@ -9,7 +9,7 @@ return {
     "folke/neodev.nvim",
 
     {
-      "jose-elias-alvarez/null-ls.nvim",
+      "nvimtools/none-ls.nvim",
       dependencies = {
         "nvim-lua/plenary.nvim",
       },
@@ -212,7 +212,8 @@ return {
           end,
         }),
         null_ls.builtins.formatting.prettier,
-        null_ls.builtins.diagnostics.shellcheck,
+        null_ls.builtins.diagnostics.shellharden,
+        null_ls.builtins.formatting.ocamlformat,
       },
     })
   end,
