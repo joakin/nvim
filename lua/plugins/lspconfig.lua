@@ -133,9 +133,6 @@ return {
       rust_analyzer = {},
       tsserver = {
         root_dir = nvim_lsp.util.root_pattern("package.json", "tsconfig.json", "node_modules"),
-        on_attach = function(client, bufnr)
-          on_attach(client, bufnr)
-        end,
       },
       denols = {
         root_dir = nvim_lsp.util.root_pattern("deno.json", "import_map.json"),
@@ -192,6 +189,8 @@ return {
           },
         },
       },
+      dartls = {},
+      bashls = {},
     }
 
     for lsp, options in pairs(servers) do
