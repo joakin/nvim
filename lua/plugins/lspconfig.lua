@@ -212,7 +212,7 @@ return {
           end,
         }),
         null_ls.builtins.formatting.prettier,
-        null_ls.builtins.diagnostics.shellharden,
+        null_ls.builtins.formatting.shellharden,
         null_ls.builtins.formatting.ocamlformat,
       },
     })
