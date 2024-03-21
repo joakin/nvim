@@ -16,10 +16,10 @@ return {
 
     vim.keymap.set("i", "<C-J>", "codeium#Accept()", expr_opts)
     vim.keymap.set("i", "<C-G><C-J>", "codeium#Accept()", expr_opts)
-    vim.keymap.set("i", "<C-G><C-G>", "codeium#Complete()", opts)
-    vim.keymap.set("i", "<C-G><C-E>", "codeium#Clear()", opts)
-    vim.keymap.set("i", "<C-G><C-N>", "codeium#CycleCompletions( 1)", opts)
-    vim.keymap.set("i", "<C-G><C-P>", "codeium#CycleCompletions(-1)", opts)
+    vim.keymap.set("i", "<C-G><C-G>", "codeium#Complete()", expr_opts)
+    vim.keymap.set("i", "<C-G><C-E>", "codeium#Clear()", expr_opts)
+    vim.keymap.set("i", "<C-G><C-N>", "codeium#CycleCompletions( 1)", expr_opts)
+    vim.keymap.set("i", "<C-G><C-P>", "codeium#CycleCompletions(-1)", expr_opts)
 
     local function getCodeiumCompletions()
       local status, completion = pcall(function()
@@ -33,11 +33,16 @@ return {
     end
     local function accept_one_line()
       local text = getCodeiumCompletions()
-      return vim.fn.split(text, [[[\n]\zs]])[1]
+      return vim.fn.split(text, [[[\n]\zs]])[1] .. "\n"
     end
     local function accept_one_word()
       local text = getCodeiumCompletions()
-      return vim.fn.split(text, [[\(\w\+\|\W\+\)\zs]])[1]
+      local words = vim.fn.split(text, [[\(\w\+\|\W\+\)\zs]])
+      if words[1] == " " then
+        return words[1] .. words[2]
+      else
+        return words[1]
+      end
     end
 
     vim.keymap.set("i", "<C-L>", accept_one_line, expr_opts)
