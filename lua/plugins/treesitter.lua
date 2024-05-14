@@ -49,6 +49,7 @@ return {
         "tsx",
         "typescript",
         "yaml",
+        "gleam",
       },
     })
   end,
