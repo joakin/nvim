@@ -128,6 +128,8 @@ return {
     end
 
     local servers = {
+      gleam = {},
+      clangd = {},
       ols = {},
       ocamllsp = {},
       rust_analyzer = {},
