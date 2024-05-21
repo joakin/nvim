@@ -4,8 +4,10 @@ return {
     -- local config = require("gp/config")
     -- print(vim.inspect(config))
 
+    local env = require("env")
+    local openai_api_key = env.read_file("~/.config/.nvim-data").OAI_API_KEY
     local config = {
-      openai_api_key = { "bw", "get", "password", "OAI_API_KEY" },
+      openai_api_key = openai_api_key,
       agents = {
         {
           name = "ChatGPT4o",
@@ -13,44 +15,34 @@ return {
           command = false,
           model = { model = "gpt-4o", temperature = 1.1, top_p = 1 },
           system_prompt = "You are a general AI assistant.\n\n"
-              .. "The user provided the additional info about how they would like you to respond:\n\n"
-              .. "- If you're unsure don't guess and say you don't know instead.\n"
-              .. "- Ask question if you need clarification to provide better answer.\n"
-              .. "- Think deeply and carefully from first principles step by step.\n"
-              .. "- Zoom out first to see the big picture and then zoom in to details.\n"
-              .. "- Use Socratic method to improve your thinking and coding skills.\n"
-              .. "- Don't elide any code from your output if the answer requires coding.\n"
-              .. "- Take a deep breath; You've got this!\n",
+            .. "The user provided the additional info about how they would like you to respond:\n\n"
+            .. "- If you're unsure don't guess and say you don't know instead.\n"
+            .. "- Ask question if you need clarification to provide better answer.\n"
+            .. "- Think deeply and carefully from first principles step by step.\n"
+            .. "- Zoom out first to see the big picture and then zoom in to details.\n"
+            .. "- Use Socratic method to improve your thinking and coding skills.\n"
+            .. "- Don't elide any code from your output if the answer requires coding.\n"
+            .. "- Take a deep breath; You've got this!\n",
         },
-        -- {
-        --   name = "ChatGPT4",
-        --   chat = true,
-        --   command = false,
-        --   model = { model = "gpt-4-turbo", temperature = 1.1, top_p = 1 },
-        --   system_prompt = "You are a general AI assistant.\n\n"
-        --     .. "The user provided the additional info about how they would like you to respond:\n\n"
-        --     .. "- If you're unsure don't guess and say you don't know instead.\n"
-        --     .. "- Ask question if you need clarification to provide better answer.\n"
-        --     .. "- Think deeply and carefully from first principles step by step.\n"
-        --     .. "- Zoom out first to see the big picture and then zoom in to details.\n"
-        --     .. "- Use Socratic method to improve your thinking and coding skills.\n"
-        --     .. "- Don't elide any code from your output if the answer requires coding.\n"
-        --     .. "- Take a deep breath; You've got this!\n",
-        -- },
+        {
+          -- Disable GPT4 from the plugin
+          name = "ChatGPT4",
+          model = false,
+        },
         {
           name = "ChatGPT3-5",
           chat = true,
           command = false,
           model = { model = "gpt-3.5-turbo", temperature = 1.1, top_p = 1 },
           system_prompt = "You are a general AI assistant.\n\n"
-              .. "The user provided the additional info about how they would like you to respond:\n\n"
-              .. "- If you're unsure don't guess and say you don't know instead.\n"
-              .. "- Ask question if you need clarification to provide better answer.\n"
-              .. "- Think deeply and carefully from first principles step by step.\n"
-              .. "- Zoom out first to see the big picture and then zoom in to details.\n"
-              .. "- Use Socratic method to improve your thinking and coding skills.\n"
-              .. "- Don't elide any code from your output if the answer requires coding.\n"
-              .. "- Take a deep breath; You've got this!\n",
+            .. "The user provided the additional info about how they would like you to respond:\n\n"
+            .. "- If you're unsure don't guess and say you don't know instead.\n"
+            .. "- Ask question if you need clarification to provide better answer.\n"
+            .. "- Think deeply and carefully from first principles step by step.\n"
+            .. "- Zoom out first to see the big picture and then zoom in to details.\n"
+            .. "- Use Socratic method to improve your thinking and coding skills.\n"
+            .. "- Don't elide any code from your output if the answer requires coding.\n"
+            .. "- Take a deep breath; You've got this!\n",
         },
         {
           name = "CodeGPT4o",
@@ -58,30 +50,26 @@ return {
           command = true,
           model = { model = "gpt-4o", temperature = 0.8, top_p = 1 },
           system_prompt = "You are an AI working as a code editor.\n\n"
-              .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
-              .. "START AND END YOUR ANSWER WITH:\n\n```",
+            .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
+            .. "START AND END YOUR ANSWER WITH:\n\n```",
         },
-        -- {
-        --   name = "CodeGPT4",
-        --   chat = false,
-        --   command = true,
-        --   model = { model = "gpt-4-turbo", temperature = 0.8, top_p = 1 },
-        --   system_prompt = "You are an AI working as a code editor.\n\n"
-        --     .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
-        --     .. "START AND END YOUR ANSWER WITH:\n\n```",
-        -- },
+        -- Disable GPT4 from the plugin
+        {
+          name = "CodeGPT4",
+          model = false,
+        },
         {
           name = "CodeGPT3-5",
           chat = false,
           command = true,
           model = { model = "gpt-3.5-turbo", temperature = 0.8, top_p = 1 },
           system_prompt = "You are an AI working as a code editor.\n\n"
-              .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
-              .. "START AND END YOUR ANSWER WITH:\n\n```",
+            .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
+            .. "START AND END YOUR ANSWER WITH:\n\n```",
         },
       },
       chat_topic_gen_model = "gpt-3.5-turbo",
-      chat_shortcut_respond = { modes = { "n", "i", "v", "x" }, shortcut = "<C-CR>" },
+      chat_shortcut_respond = { modes = { "n", "i", "v", "x" }, shortcut = "<C-g><CR>" },
       -- chat_shortcut_delete = { modes = { "n", "i", "v", "x" }, shortcut = "<C-g>d" },
       -- chat_shortcut_stop = { modes = { "n", "i", "v", "x" }, shortcut = "<C-g>s" },
       -- chat_shortcut_new = { modes = { "n", "i", "v", "x" }, shortcut = "<C-g>c" },
