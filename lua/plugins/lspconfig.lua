@@ -144,6 +144,19 @@ return {
       },
       cssls = {},
       elmls = {
+        handlers = {
+          ["window/showMessageRequest"] = function(whatever, result)
+            -- For some reason, the showMessageRequest handler doesn't work with
+            -- the format failed error. It just hangs on the screen and can't
+            -- interact with the vim.ui.select thingy. So skip it.
+            if result.message:find("Running elm-format failed", 1, true) then
+              -- print error
+              print(result.message)
+              return vim.NIL
+            end
+            return vim.lsp.handlers["window/showMessageRequest"](whatever, result)
+          end,
+        },
         settings = {
           elmLS = {
             onlyUpdateDiagnosticsOnSave = true,
