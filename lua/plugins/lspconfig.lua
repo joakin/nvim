@@ -150,7 +150,6 @@ return {
             -- the format failed error. It just hangs on the screen and can't
             -- interact with the vim.ui.select thingy. So skip it.
             if result.message:find("Running elm-format failed", 1, true) then
-              -- print error
               print(result.message)
               return vim.NIL
             end
