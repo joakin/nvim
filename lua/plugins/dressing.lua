@@ -1,4 +1,4 @@
--- Better vim.ui.{select,prompt}
+-- Better vim.ui.{select,input}
 return {
   "stevearc/dressing.nvim",
   opts = {
