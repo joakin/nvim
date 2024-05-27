@@ -20,8 +20,6 @@ return {
       end,
     })
 
-    vim.keymap.set("n", "<C-W><C-G>", "<cmd>ZenMode<cr>", { desc = "Zen mode" })
-    vim.keymap.set("n", "<C-W>g", "<cmd>ZenMode<cr>", { desc = "Zen mode" })
-    vim.keymap.set("n", "<leader>G", "<cmd>ZenMode<cr>", { desc = "Zen mode" })
+    vim.keymap.set("n", "<C-W><C-Z>", "<cmd>ZenMode<cr>", { desc = "Zen mode" })
   end,
 }
