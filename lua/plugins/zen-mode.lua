@@ -3,6 +3,7 @@ return {
   config = function()
     require("zen-mode").setup({
       window = {
+        width = 80,
         options = {
           signcolumn = "no",
           number = false,
@@ -21,5 +22,6 @@ return {
     })
 
     vim.keymap.set("n", "<C-W><C-Z>", "<cmd>ZenMode<cr>", { desc = "Zen mode" })
+    vim.keymap.set("n", "<C-W>z", "<cmd>ZenMode<cr>", { desc = "Zen mode" })
   end,
 }
