@@ -1,6 +1,7 @@
 return {
   "robitx/gp.nvim",
   config = function()
+    -- https://github.com/Robitx/gp.nvim/blob/main/lua/gp/config.lua
     local default_config = require("gp/config")
 
     local chatgpt4o = vim.tbl_filter(function(agent)
