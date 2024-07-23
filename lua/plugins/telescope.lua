@@ -5,6 +5,7 @@ return {
   dependencies = {
     "nvim-lua/plenary.nvim",
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    "nvim-tree/nvim-web-devicons",
   },
   config = function()
     local telescope = require("telescope")
@@ -52,7 +53,7 @@ return {
         preview = {
           -- hide_on_startup = true, -- hide previewer when picker starts
         },
-        path_display = { truncate = 1 },
+        path_display = { truncate = 3 },
         file_ignore_patterns = { "^.git/", "node_modules/", "elm-stuff/" },
       },
       pickers = {
