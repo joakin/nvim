@@ -1,74 +1,78 @@
 return {
   "robitx/gp.nvim",
   config = function()
-    -- local config = require("gp/config")
-    -- print(vim.inspect(config))
+    local default_config = require("gp/config")
+
+    local chatgpt4o = vim.tbl_filter(function(agent)
+      return agent.name == "ChatGPT4o"
+    end, default_config.agents)[1] or nil
+    if not chatgpt4o then
+      print("ChatGPT4o agent not found")
+      return
+    end
+
+    local codegpt4o = vim.tbl_filter(function(agent)
+      return agent.name == "CodeGPT4o"
+    end, default_config.agents)[1] or nil
+    if not codegpt4o then
+      print("CodeGPT4o agent not found")
+      return
+    end
 
     local env = require("env")
-    local openai_api_key = env.read_file("~/.config/.nvim-data").OAI_API_KEY
+    local keys = env.read_file("~/.config/.nvim-data")
+    if not keys then
+      print("~/.config/.nvim-data not found")
+      return
+    end
+
     local config = {
-      openai_api_key = openai_api_key,
+      providers = {
+        openai = {
+          endpoint = "https://api.openai.com/v1/chat/completions",
+          secret = keys.OAI_API_KEY,
+        },
+        anthropic = {
+          endpoint = "https://api.anthropic.com/v1/messages",
+          secret = keys.ANT_API_KEY,
+        },
+      },
       agents = {
         {
-          name = "ChatGPT4o",
+          provider = "openai",
+          name = "ChatGPT4o-mini",
           chat = true,
           command = false,
-          model = { model = "gpt-4o", temperature = 1.1, top_p = 1 },
-          system_prompt = "You are a general AI assistant.\n\n"
-            .. "The user provided the additional info about how they would like you to respond:\n\n"
-            .. "- If you're unsure don't guess and say you don't know instead.\n"
-            .. "- Ask question if you need clarification to provide better answer.\n"
-            .. "- Think deeply and carefully from first principles step by step.\n"
-            .. "- Zoom out first to see the big picture and then zoom in to details.\n"
-            .. "- Use Socratic method to improve your thinking and coding skills.\n"
-            .. "- Don't elide any code from your output if the answer requires coding.\n"
-            .. "- Take a deep breath; You've got this!\n",
+          model = { model = "gpt-4o-mini", temperature = 1.1, top_p = 1 },
+          system_prompt = chatgpt4o.system_prompt,
         },
         {
-          -- Disable GPT4 from the plugin
-          name = "ChatGPT4",
-          model = false,
-        },
-        {
-          name = "ChatGPT3-5",
-          chat = true,
-          command = false,
-          model = { model = "gpt-3.5-turbo", temperature = 1.1, top_p = 1 },
-          system_prompt = "You are a general AI assistant.\n\n"
-            .. "The user provided the additional info about how they would like you to respond:\n\n"
-            .. "- If you're unsure don't guess and say you don't know instead.\n"
-            .. "- Ask question if you need clarification to provide better answer.\n"
-            .. "- Think deeply and carefully from first principles step by step.\n"
-            .. "- Zoom out first to see the big picture and then zoom in to details.\n"
-            .. "- Use Socratic method to improve your thinking and coding skills.\n"
-            .. "- Don't elide any code from your output if the answer requires coding.\n"
-            .. "- Take a deep breath; You've got this!\n",
-        },
-        {
-          name = "CodeGPT4o",
+          provider = "openai",
+          name = "CodeGPT4o-mini",
           chat = false,
           command = true,
-          model = { model = "gpt-4o", temperature = 0.8, top_p = 1 },
-          system_prompt = "You are an AI working as a code editor.\n\n"
-            .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
-            .. "START AND END YOUR ANSWER WITH:\n\n```",
+          model = { model = "gpt-4o-mini", temperature = 0.8, top_p = 1 },
+          system_prompt = codegpt4o.system_prompt,
         },
-        -- Disable GPT4 from the plugin
+        -- Disable unwanted models
         {
-          name = "CodeGPT4",
-          model = false,
+          name = "ChatGPT3-5",
+          disable = true,
         },
         {
           name = "CodeGPT3-5",
-          chat = false,
-          command = true,
-          model = { model = "gpt-3.5-turbo", temperature = 0.8, top_p = 1 },
-          system_prompt = "You are an AI working as a code editor.\n\n"
-            .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
-            .. "START AND END YOUR ANSWER WITH:\n\n```",
+          disable = true,
+        },
+        {
+          name = "ChatClaude-3-Haiku",
+          disable = true,
+        },
+        {
+          name = "CodeClaude-3-Haiku",
+          disable = true,
         },
       },
-      chat_topic_gen_model = "gpt-3.5-turbo",
+      chat_topic_gen_model = "gpt-4o-mini",
       chat_shortcut_respond = { modes = { "n", "i", "v", "x" }, shortcut = "<C-g><CR>" },
       -- chat_shortcut_delete = { modes = { "n", "i", "v", "x" }, shortcut = "<C-g>d" },
       -- chat_shortcut_stop = { modes = { "n", "i", "v", "x" }, shortcut = "<C-g>s" },
@@ -83,7 +87,7 @@ return {
         noremap = true,
         silent = true,
         nowait = true,
-        desc = "GPT " .. desc,
+        desc = "GP " .. desc,
       }
     end
 
