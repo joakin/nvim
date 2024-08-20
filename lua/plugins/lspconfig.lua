@@ -135,6 +135,25 @@ return {
       rust_analyzer = {},
       tsserver = {
         root_dir = nvim_lsp.util.root_pattern("package.json", "tsconfig.json", "node_modules"),
+        init_options = {
+          plugins = {
+            {
+              name = "@vue/typescript-plugin",
+              location = (function()
+                local handle = io.popen("npm list -g --depth=0 --parseable @vue/typescript-plugin")
+                local result = handle:read("*a")
+                handle:close()
+                return result:match("(.-)%s*$") -- Trim trailing whitespace
+              end)(),
+              languages = { "javascript", "typescript", "vue" },
+            },
+          },
+        },
+        filetypes = {
+          "javascript",
+          "typescript",
+          "vue",
+        },
       },
       denols = {
         root_dir = nvim_lsp.util.root_pattern("deno.json", "import_map.json"),
@@ -175,7 +194,7 @@ return {
         end,
       },
       html = {},
-      vuels = {},
+      volar = {},
       eslint = {
         on_attach = function(client, bufnr)
           -- https://github.com/neovim/nvim-lspconfig/pull/1299#issuecomment-942214556
