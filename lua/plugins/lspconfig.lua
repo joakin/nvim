@@ -40,21 +40,29 @@ return {
               if client.name == "tsserver" then
                 return false
               end
+
               -- Local project autosave settings
               local path = vim.fn.expand("#" .. bufnr .. ":p")
               local ft = vim.opt.filetype:get()
 
-              if ft == "jst" and client.name == "html" then
-                return false
-              end
+              -- if ft == "jst" and client.name == "html" then
+              --   return false
+              -- end
 
-              if string.find(path, "/wikimedia/") then
-                if ft == "json" then
-                  return false
-                elseif ft == "vue" or ft == "javascript" then
-                  return client.name == "eslint"
-                end
-              end
+              -- if string.find(path, "/wikimedia/") then
+              --   if ft == "json" then
+              --     return false
+              --   elseif ft == "vue" or ft == "javascript" then
+              --     return client.name == "eslint"
+              --   end
+              -- end
+
+              -- if string.find(path, "/routine/") then
+              --   if client.name == "eslint" then
+              --     return false
+              --   end
+              -- end
+
               return true
             end,
           })
