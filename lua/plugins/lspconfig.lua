@@ -57,11 +57,13 @@ return {
               --   end
               -- end
 
-              -- if string.find(path, "/routine/") then
-              --   if client.name == "eslint" then
-              --     return false
-              --   end
-              -- end
+              if string.find(path, "/routine/") then
+                if client.name == "volar" then
+                  -- Disable volar formatter for now since the team doesn't use
+                  -- it
+                  return false
+                end
+              end
 
               return true
             end,
@@ -251,7 +253,9 @@ return {
             return utils.root_has_file("stylua.toml")
           end,
         }),
-        null_ls.builtins.formatting.prettier,
+        null_ls.builtins.formatting.prettier.with({
+          prefer_local = "node_modules/.bin",
+        }),
         null_ls.builtins.formatting.shellharden,
         null_ls.builtins.formatting.ocamlformat,
       },
