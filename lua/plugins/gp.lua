@@ -39,31 +39,7 @@ return {
         },
       },
       agents = {
-        {
-          provider = "openai",
-          name = "ChatGPT4o-mini",
-          chat = true,
-          command = false,
-          model = { model = "gpt-4o-mini", temperature = 1.1, top_p = 1 },
-          system_prompt = chatgpt4o.system_prompt,
-        },
-        {
-          provider = "openai",
-          name = "CodeGPT4o-mini",
-          chat = false,
-          command = true,
-          model = { model = "gpt-4o-mini", temperature = 0.8, top_p = 1 },
-          system_prompt = codegpt4o.system_prompt,
-        },
         -- Disable unwanted models
-        {
-          name = "ChatGPT3-5",
-          disable = true,
-        },
-        {
-          name = "CodeGPT3-5",
-          disable = true,
-        },
         {
           name = "ChatClaude-3-Haiku",
           disable = true,
