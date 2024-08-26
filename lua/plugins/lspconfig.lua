@@ -150,10 +150,14 @@ return {
             {
               name = "@vue/typescript-plugin",
               location = (function()
-                local handle = io.popen("npm list -g --depth=0 --parseable @vue/typescript-plugin")
-                local result = handle:read("*a")
-                handle:close()
-                return result:match("(.-)%s*$") -- Trim trailing whitespace
+                -- Get path: npm list -g --depth=0 --parseable @vue/typescript-plugin
+                if vim.fn.has("mac") == 1 then
+                  return "/opt/homebrew/lib/node_modules/@vue/typescript-plugin"
+                elseif vim.fn.has("unix") == 1 then
+                  error("Linux path for @vue/typescript-plugin not set")
+                elseif vim.fn.has("win32") == 1 then
+                  error("Windows path for @vue/typescript-plugin not set")
+                end
               end)(),
               -- Only for .vue files for now.
               languages = { "vue" }, -- { "javascript", "typescript", "vue" },
