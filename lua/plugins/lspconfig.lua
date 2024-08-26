@@ -155,7 +155,8 @@ return {
                 handle:close()
                 return result:match("(.-)%s*$") -- Trim trailing whitespace
               end)(),
-              languages = { "javascript", "typescript", "vue" },
+              -- Only for .vue files for now.
+              languages = { "vue" }, -- { "javascript", "typescript", "vue" },
             },
           },
         },
