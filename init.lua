@@ -910,12 +910,21 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
 })
 
--- Use foldmethod=marker when editing init.lua
-vim.api.nvim_create_autocmd("BufEnter", {
-  pattern = "init.lua",
+-- Set foldmethod based on filetype and treesitter grammar availability
+vim.api.nvim_create_autocmd({ "FileType" }, {
   group = joakin_autocmd,
   callback = function()
-    vim.opt_local.foldmethod = "marker"
+    local file_name = vim.fn.expand("%:t")
+    local file_path = vim.fn.expand("%:p")
+
+    if file_name == "init.lua" and file_path:match(".config/nvim") then
+      vim.opt_local.foldmethod = "marker"
+    elseif require("nvim-treesitter.parsers").has_parser() then
+      vim.opt.foldmethod = "expr"
+      vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+    else
+      vim.opt.foldmethod = "syntax"
+    end
   end,
 })
 
