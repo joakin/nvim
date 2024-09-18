@@ -54,7 +54,7 @@ return {
           -- hide_on_startup = true, -- hide previewer when picker starts
         },
         path_display = { truncate = 3 },
-        file_ignore_patterns = { "^.git/", "node_modules/", "elm-stuff/" },
+        -- file_ignore_patterns = { "^.git/", "node_modules/", "elm-stuff/" },
       },
       pickers = {
         find_files = {
