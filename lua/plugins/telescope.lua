@@ -63,7 +63,7 @@ return {
         buffers = {
           mappings = {
             i = {
-              ["<C-bs>"] = "delete_buffer",
+              ["<C-BS>"] = "delete_buffer",
             },
           },
           sort_mru = true,
