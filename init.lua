@@ -8,7 +8,7 @@ if vim.fn.has("win32") == true then
   isWindows = true
 end
 local isLinux = false
-if vim.fn.has("unix") == true then
+if vim.fn.has("unix") == true and not isMac then
   isLinux = true
 end
 local isWSL = false
@@ -271,13 +271,13 @@ if vim.fn.has("gui_running") == 1 then
   if isWindows then
     vim.cmd([[ GuiFont! LigaLex Mono:h12 ]])
     vim.opt.linespace = 6
+  elseif isMac then
+    vim.opt.macligatures = true
+    vim.opt.gfn = "Monaspace Xenon Var:h16"
+    vim.opt.linespace = 8
   elseif isLinux then
     vim.opt.gfn = "monospace 14"
     vim.opt.linespace = 2
-  elseif isMac then
-    vim.opt.macligatures = true
-    vim.opt.gfn = "LigaLex Mono:h16"
-    vim.opt.linespace = 8
   end
 
   vim.cmd([[
@@ -321,6 +321,58 @@ vim.opt.pumheight = 5
 if vim.opt.termguicolors:get() then
   vim.opt.pumblend = 3
 end
+
+-- Neovide {{{
+if vim.g.neovide then
+  -- Allow clipboard copy paste in neovim
+  vim.keymap.set("n", "<D-s>", ":w<CR>") -- Save
+  vim.keymap.set("v", "<D-c>", '"+y') -- Copy
+  vim.keymap.set("n", "<D-v>", '"+P') -- Paste normal mode
+  vim.keymap.set("v", "<D-v>", '"+P') -- Paste visual mode
+  vim.keymap.set("c", "<D-v>", "<C-R>+") -- Paste command mode
+  vim.keymap.set("t", "<D-v>", "<C-R>+", { noremap = true, silent = true })
+  vim.keymap.set("!", "<D-v>", "<C-R>+", { noremap = true, silent = true })
+  vim.keymap.set("i", "<D-v>", '<ESC>l"+Pli') -- Paste insert mode
+  vim.keymap.set("", "<D-v>", "+p<CR>", { noremap = true, silent = true })
+
+  local function adjust_guifont(delta)
+    local current_font = vim.opt.guifont:get()[0]
+    local font_name, font_size = string.match(current_font, "(.+):h(%d+)")
+    if font_name and font_size then
+      font_size = tonumber(font_size) + delta
+      vim.opt.guifont = string.format("%s:h%d", font_name, font_size)
+    else
+      print("Error: Unable to adjust guifont.")
+    end
+  end
+  function IncreaseGuifont()
+    adjust_guifont(1)
+  end
+
+  function DecreaseGuifont()
+    adjust_guifont(-1)
+  end
+
+  vim.keymap.set("n", "<D-=>", IncreaseGuifont)
+  vim.keymap.set("n", "<D-->", DecreaseGuifont)
+
+  -- vim.opt.guifont = "Monaspace Radon Var:h16"
+  vim.opt.linespace = 16
+
+  vim.g.neovide_window_blurred = true
+  vim.g.neovide_transparency = 0.8
+  vim.g.neovide_normal_opacity = 1
+
+  vim.g.neovide_floating_shadow = true
+  vim.g.neovide_floating_z_height = 10
+  vim.g.neovide_light_angle_degrees = 45
+  vim.g.neovide_light_radius = 5
+
+  vim.g.neovide_floating_corner_radius = 1.0
+
+  vim.g.neovide_cursor_vfx_mode = "pixiedust"
+end
+-- }}}
 
 -- }}}
 
