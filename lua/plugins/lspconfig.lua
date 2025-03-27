@@ -143,7 +143,7 @@ return {
       ols = {},
       ocamllsp = {},
       rust_analyzer = {},
-      tsserver = {
+      ts_ls = {
         root_dir = nvim_lsp.util.root_pattern("package.json", "tsconfig.json", "node_modules"),
         init_options = {
           plugins = {
@@ -179,7 +179,7 @@ return {
       cssls = {},
       elmls = {
         handlers = {
-          ["window/showMessageRequest"] = function(whatever, result)
+          ["window/showMessageRequest"] = function(err, result, context, config)
             -- For some reason, the showMessageRequest handler doesn't work with
             -- the format failed error. It just hangs on the screen and can't
             -- interact with the vim.ui.select thingy. So skip it.
@@ -187,7 +187,7 @@ return {
               print(result.message)
               return vim.NIL
             end
-            return vim.lsp.handlers["window/showMessageRequest"](whatever, result)
+            return vim.lsp.handlers["window/showMessageRequest"](err, result, context, config)
           end,
         },
         settings = {
