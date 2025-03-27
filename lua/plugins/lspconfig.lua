@@ -239,6 +239,8 @@ return {
       },
       dartls = {},
       bashls = {},
+      yamlls = {},
+      rescriptls = {},
     }
 
     for lsp, options in pairs(servers) do
