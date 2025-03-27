@@ -3,7 +3,7 @@ return {
   config = function()
     require("zen-mode").setup({
       window = {
-        width = 80,
+        width = 100,
         options = {
           signcolumn = "no",
           number = false,
