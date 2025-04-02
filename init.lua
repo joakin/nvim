@@ -95,7 +95,6 @@ require("lazy").setup({
   "stephpy/vim-yaml", -- Vim 7.4 yaml syntax is horrible slow
   "tikhomirov/vim-glsl",
   "cespare/vim-toml",
-  "briancollins/vim-jst",
   -- }}}
 
   -- Languages {{{

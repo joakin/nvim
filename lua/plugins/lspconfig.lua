@@ -44,10 +44,11 @@ return {
               -- Local project autosave settings
               local path = vim.fn.expand("#" .. bufnr .. ":p")
               local ft = vim.opt.filetype:get()
+              local extension = vim.fn.expand("#" .. bufnr .. ":e")
 
-              -- if ft == "jst" and client.name == "html" then
-              --   return false
-              -- end
+              if extension == "ejs" then
+                return false
+              end
 
               -- if string.find(path, "/wikimedia/") then
               --   if ft == "json" then
