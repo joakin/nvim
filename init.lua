@@ -70,7 +70,8 @@ require("lazy").setup({
   -- Local .vimrc sourcing on folders
   "MarcWeber/vim-addon-local-vimrc",
   -- Fast folds - Recompute folds only on certain actions
-  "Konfekt/FastFold",
+  -- Disabled due to issues with Telescope: https://github.com/nvim-telescope/telescope.nvim/issues/3475
+  -- "Konfekt/FastFold",
   -- }}}
 
   -- Text Objects {{{
