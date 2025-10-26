@@ -20,7 +20,7 @@ return {
   },
   config = function()
     local null_ls = require("null-ls")
-    local nvim_lsp = require("lspconfig")
+    local util = require("lspconfig.util")
     local _ = require("cmp_nvim_lsp")
 
     local flags = {
@@ -59,8 +59,8 @@ return {
               -- end
 
               if string.find(path, "/routine/") then
-                if client.name == "volar" then
-                  -- Disable volar formatter for now since the team doesn't use
+                if client.name == "vue_ls" then
+                  -- Disable vue_ls formatter for now since the team doesn't use
                   -- it
                   return false
                 end
@@ -145,7 +145,7 @@ return {
       ocamllsp = {},
       rust_analyzer = {},
       ts_ls = {
-        root_dir = nvim_lsp.util.root_pattern("package.json", "tsconfig.json", "node_modules"),
+        root_dir = util.root_pattern("package.json", "tsconfig.json", "node_modules"),
         init_options = {
           plugins = {
             {
@@ -172,7 +172,7 @@ return {
         },
       },
       denols = {
-        root_dir = nvim_lsp.util.root_pattern("deno.json", "import_map.json"),
+        root_dir = util.root_pattern("deno.json", "import_map.json"),
         init_options = {
           lint = true,
         },
@@ -210,7 +210,7 @@ return {
         end,
       },
       html = {},
-      volar = {},
+      vue_ls = {},
       eslint = {
         on_attach = function(client, bufnr)
           -- https://github.com/neovim/nvim-lspconfig/pull/1299#issuecomment-942214556
@@ -245,10 +245,11 @@ return {
     }
 
     for lsp, options in pairs(servers) do
-      nvim_lsp[lsp].setup(vim.tbl_deep_extend("force", {
+      vim.lsp.config(lsp, vim.tbl_deep_extend("force", {
         on_attach = on_attach,
         flags = flags,
       }, options))
+      vim.lsp.enable(lsp)
     end
 
     null_ls.setup({
