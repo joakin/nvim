@@ -241,14 +241,25 @@ return {
       dartls = {},
       bashls = {},
       yamlls = {},
-      rescriptls = {},
+      rescriptls = {
+        capabilities = {
+          workspace = {
+            didChangeWatchedFiles = {
+              dynamicRegistration = true,
+            },
+          },
+        },
+      },
     }
 
     for lsp, options in pairs(servers) do
-      vim.lsp.config(lsp, vim.tbl_deep_extend("force", {
-        on_attach = on_attach,
-        flags = flags,
-      }, options))
+      vim.lsp.config(
+        lsp,
+        vim.tbl_deep_extend("force", {
+          on_attach = on_attach,
+          flags = flags,
+        }, options)
+      )
       vim.lsp.enable(lsp)
     end
 
