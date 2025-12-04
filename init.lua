@@ -418,6 +418,9 @@ vim.g.mustache_operators = 0
 
 -- Vim {{{
 
+-- Esc
+vim.keymap.set("i", "kj", "<Esc>", { desc = "Insert mode escape" })
+
 -- Repeat search & replace
 vim.keymap.set("n", "&", ":&&<CR>", { desc = "Repeat search with flags" })
 vim.keymap.set("x", "&", ":&&<CR>", { desc = "Repeat search with flags" })
